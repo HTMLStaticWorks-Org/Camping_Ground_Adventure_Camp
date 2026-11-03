@@ -1,0 +1,2 @@
+# Camping_Ground_Adventure_Camp
+Automated website repository for Camping_Ground_Adventure_Camp
