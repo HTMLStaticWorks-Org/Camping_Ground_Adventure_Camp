@@ -83,3 +83,21 @@
     filter: invert(1) brightness(1.2);
     cursor: pointer;
 }
+
+/* Item 8: Footer links hover styling in Dark Mode */
+[data-theme="dark"] .footer-links a:hover {
+    color: #FFFFFF !important;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    padding-left: 4px;
+    transition: all 0.2s ease;
+}
+
+[data-theme="dark"] .footer .nav-brand:hover span {
+    color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .footer-bottom a:hover {
+    color: #FFFFFF !important;
+    text-decoration: underline;
+}

@@ -66,7 +66,7 @@
             
             <div class="page-hero-visual">
                 <div class="hero-image-card">
-                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1600&q=80" alt="WildCamp Passes" class="img-cover">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzS-qFqf0RVNdFWd5mUndOA331Xeri3QTTz86_f5Iq-ofAi46lccImKyA&s=10" alt="WildCamp Passes" class="img-cover">
                 </div>
             </div>
         </div>
@@ -216,7 +216,7 @@
         <div class="container fade-up">
             <div class="value-grid">
                 <div class="value-img-col fade-up" style="transition-delay: 0.1s;">
-                    <img src="https://img.magnific.com/free-vector/round-golden-luxury-label_1017-8436.jpg?semt=ais_hybrid&w=740&q=80"
+                    <img src="https://i.ytimg.com/vi/uKBZQ9pM9BQ/maxresdefault.jpg"
                         alt="WildCamp Pass Guarantee">
                 </div>
                 <div class="value-content-col fade-up" style="transition-delay: 0.3s;">
@@ -392,7 +392,7 @@
                 }
 
                 .faq-item summary {
-                    padding: 24px;
+                    padding: 24px 60px 24px 24px;
                     font-size: 18px;
                     font-weight: 600;
                     cursor: pointer;
@@ -400,6 +400,7 @@
                     position: relative;
                     color: var(--text-primary);
                     outline: none;
+                    line-height: 1.4;
                 }
 
                 .faq-item summary::-webkit-details-marker {
@@ -413,19 +414,71 @@
                     top: 50%;
                     transform: translateY(-50%);
                     font-size: 24px;
+                    font-weight: 400;
+                    width: 24px;
+                    height: 24px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     color: var(--primary-accent);
                     transition: transform 0.3s ease;
                 }
 
                 .faq-item[open] summary::after {
                     content: '−';
-                    transform: translateY(-50%) rotate(180deg);
+                    transform: translateY(-50%);
                 }
 
                 .faq-content {
                     padding: 0 24px 24px;
                     color: var(--text-secondary);
                     line-height: 1.6;
+                }
+
+                @media (max-width: 768px) {
+                    .faq-item summary {
+                        padding: 18px 52px 18px 18px;
+                        font-size: 16px;
+                        line-height: 1.45;
+                    }
+
+                    .faq-item summary::after {
+                        right: 18px;
+                        font-size: 22px;
+                        top: 28px;
+                        transform: translateY(-50%);
+                    }
+
+                    .faq-item[open] summary::after {
+                        transform: translateY(-50%);
+                    }
+
+                    .faq-content {
+                        padding: 0 18px 18px;
+                        font-size: 14.5px;
+                    }
+                }
+
+                [dir="rtl"] .faq-item summary {
+                    padding-right: 24px;
+                    padding-left: 60px;
+                }
+
+                [dir="rtl"] .faq-item summary::after {
+                    right: auto;
+                    left: 24px;
+                }
+
+                @media (max-width: 768px) {
+                    [dir="rtl"] .faq-item summary {
+                        padding-right: 18px;
+                        padding-left: 52px;
+                    }
+
+                    [dir="rtl"] .faq-item summary::after {
+                        right: auto;
+                        left: 18px;
+                    }
                 }
             </style>
             <div style="max-width: 800px; margin: 0 auto;">
@@ -504,9 +557,9 @@
                         </div>
                     </div>
 
-                    <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center; pt: 16px; border-top: 1px solid var(--border-color);">
-                        <a href="register.html" class="btn btn-primary" style="height: 48px; padding: 0 28px; font-size: 14.5px;">Claim Your Camp Pass</a>
-                        <a href="contact.html" class="btn btn-secondary" style="height: 48px; padding: 0 28px; font-size: 14.5px;">Group Booking Inquiry</a>
+                    <div class="cta-passes-actions-bar">
+                        <a href="register.html" class="btn btn-primary">Claim Your Camp Pass</a>
+                        <a href="contact.html" class="btn btn-secondary">Group Booking Inquiry</a>
                         <span style="font-size: 12.5px; color: var(--text-secondary); margin-left: auto;">Rates starting from <strong>$49 / night</strong></span>
                     </div>
                 </div>

@@ -88,11 +88,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // For dashboard page: hamburger slides in the sidebar nav links
     const dashboardSidebar = document.querySelector('.dashboard-sidebar');
     const dashboardMenuToggle = document.getElementById('dashboardMenuToggle');
+    const dashboardSidebarClose = document.getElementById('dashboardSidebarClose');
 
     if (dashboardSidebar && dashboardMenuToggle) {
         dashboardMenuToggle.addEventListener('click', () => {
             dashboardSidebar.classList.toggle('open');
         });
+
+        if (dashboardSidebarClose) {
+            dashboardSidebarClose.addEventListener('click', () => {
+                dashboardSidebar.classList.remove('open');
+            });
+        }
 
         // Close sidebar when clicking outside
         document.addEventListener('click', (e) => {

@@ -27,15 +27,38 @@
             height: 72px !important;
             min-height: 72px !important;
             box-sizing: border-box !important;
-            padding: 0 32px;
+            padding: 0 24px;
             border-bottom: 1px solid var(--border-color);
             margin-bottom: 16px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
         }
         .dashboard-sidebar-brand .nav-brand {
             margin: 0;
             padding: 0;
+        }
+        .dashboard-sidebar-close {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-primary);
+            padding: 6px 10px;
+            border-radius: 8px;
+            line-height: 1;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .dashboard-sidebar-close:hover {
+            color: var(--primary-accent);
+            background: rgba(0, 0, 0, 0.06);
+        }
+        [data-theme="dark"] .dashboard-sidebar-close:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
         .dashboard-nav-wrapper {
             flex-grow: 1;
@@ -74,26 +97,58 @@
         .mobile-only-brand {
             display: none;
         }
-        /* ── 1024px: Slim sidebar + fix content grids ── */
-        @media (max-width: 1024px) and (min-width: 769px) {
-            /* Narrow the sidebar */
-            .dashboard-sidebar { width: 220px !important; }
+        /* ── 1024px: Sidebar inside hamburger menu + content grid adjustments ── */
+        @media (max-width: 1024px) {
+            .dashboard-sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 280px !important;
+                height: 100vh !important;
+                transform: translateX(-100%) !important;
+                transition: transform 0.3s ease !important;
+                z-index: 1002 !important;
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+            }
 
-            /* Shift main area and navbar to match narrower sidebar */
-            .dashboard-main-area { margin-left: 220px !important; }
+            .dashboard-sidebar.open {
+                transform: translateX(0) !important;
+            }
+
+            [dir="rtl"] .dashboard-sidebar {
+                left: auto !important;
+                right: 0 !important;
+                transform: translateX(100%) !important;
+            }
+
+            [dir="rtl"] .dashboard-sidebar.open {
+                transform: translateX(0) !important;
+            }
+
+            .dashboard-sidebar-close {
+                display: flex !important;
+            }
+
+            .dashboard-main-area {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            .mobile-only-brand {
+                display: flex !important;
+            }
+
             .dashboard-navbar {
-                left: 220px !important;
-                width: calc(100% - 220px) !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
             }
 
             /* Reduce inner content padding */
             .dashboard-content {
                 padding: 0 20px 20px 20px !important;
+                padding-top: 72px !important;
             }
-
-            /* RTL adjustments for narrower sidebar at 1024px */
-            [dir="rtl"] .dashboard-main-area { margin-right: 220px !important; margin-left: 0 !important; }
-            [dir="rtl"] .dashboard-navbar { right: 220px !important; left: 0 !important; }
 
             /* Stat cards row: 2 columns instead of 4 */
             .dashboard-section .grid-4 {
@@ -110,21 +165,6 @@
             /* Inner 2-column grids: stay 2-col but reduce gap */
             .dashboard-section .grid-2 {
                 gap: 16px !important;
-            }
-
-            /* Sidebar nav font — slightly smaller to fit 220px */
-            .dashboard-nav li a {
-                font-size: 13.5px !important;
-                padding: 12px 20px !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-main-area { margin-left: 0; }
-            .mobile-only-brand { display: flex !important; }
-            .dashboard-navbar {
-                left: 0;
-                width: 100%;
             }
         }
 
@@ -373,6 +413,7 @@
                     <img src="assets/images/logo.svg" alt="WildCamp Logo" class="nav-brand-img">
                     <span>Wild<span class="brand-accent">Camp</span></span>
                 </a>
+                <button class="dashboard-sidebar-close" id="dashboardSidebarClose" aria-label="Close menu">✕</button>
             </div>
             
             <!-- Mobile Profile & Controls (Visible on mobile only) -->

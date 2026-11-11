@@ -397,8 +397,8 @@ small {
     display: none;
 }
 
-/* === 1024px Navbar: Keep all menus and buttons in a single horizontal row === */
-@media (max-width: 1180px) and (min-width: 769px) {
+/* === Large Tablet / Small Laptop Navbar: Keep menus and buttons in single horizontal row === */
+@media (max-width: 1180px) and (min-width: 1025px) {
 
     /* Keep hamburger hidden — navbar stays full horizontal */
     .mobile-menu-toggle {
@@ -491,8 +491,8 @@ small {
     }
 }
 
-/* Below 768px: Hamburger mobile menu */
-@media (max-width: 768px) {
+/* 1024px and below: Hamburger mobile menu */
+@media (max-width: 1024px) {
     .mobile-menu-toggle {
         display: flex;
     }
@@ -1379,20 +1379,41 @@ select.form-control {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .dashboard-sidebar {
         transform: translateX(-100%);
         transition: transform 0.3s ease;
-        z-index: 999;
+        z-index: 1002;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 280px !important;
+        height: 100vh !important;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
     }
 
     .dashboard-sidebar.open {
-        transform: translateX(0);
+        transform: translateX(0) !important;
+    }
+
+    .dashboard-main-area {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .dashboard-navbar {
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
     }
 
     .dashboard-content {
-        margin-left: 0;
+        margin-left: 0 !important;
         padding: 24px;
+    }
+
+    .mobile-only-brand {
+        display: flex !important;
     }
 
     /* Keep dashboard navbar icons on one line */
@@ -1416,21 +1437,21 @@ select.form-control {
         display: flex !important;
     }
 
-    /* Hide username text — show only avatar to save space */
+    /* Hide username text on mobile & tablet to save space */
     .dashboard-username {
         display: none !important;
     }
 
-    /* Tighten dashboard navbar container padding on mobile */
+    /* Tighten dashboard navbar container padding on mobile & tablet */
     .navbar .container[style*="max-width: 100%"] {
-        padding: 0 12px !important;
+        padding: 0 16px !important;
         gap: 8px;
     }
 
-    /* Action-icon size on dashboard mobile */
+    /* Action-icon size on dashboard */
     .navbar .container[style*="max-width: 100%"] .action-icon {
-        width: 34px !important;
-        height: 34px !important;
+        width: 36px !important;
+        height: 36px !important;
         font-size: 15px !important;
     }
 
@@ -1450,6 +1471,17 @@ select.form-control {
     .navbar .container[style*="max-width: 100%"] img[alt="User"] {
         width: 32px !important;
         height: 32px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar .container[style*="max-width: 100%"] {
+        padding: 0 12px !important;
+    }
+
+    .navbar .container[style*="max-width: 100%"] .action-icon {
+        width: 34px !important;
+        height: 34px !important;
     }
 }
 
@@ -1494,6 +1526,9 @@ section.premium-section:not(.bg-secondary):nth-of-type(5) {
 }
 
 .footer-top {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 36px;
     padding-bottom: 60px;
 }
 
@@ -1527,19 +1562,30 @@ section.premium-section:not(.bg-secondary):nth-of-type(5) {
     transform: translateY(-3px);
 }
 
+.footer-widget {
+    display: flex;
+    flex-direction: column;
+}
+
 .footer-widget h4 {
     font-size: 20px;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
 }
 
 .footer-links {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .footer-links li {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     display: flex;
     align-items: flex-start;
+}
+
+.footer-links li:last-child {
+    margin-bottom: 0;
 }
 
 .footer-links li svg {
@@ -1555,6 +1601,24 @@ section.premium-section:not(.bg-secondary):nth-of-type(5) {
 
 .footer-links a:hover {
     color: var(--primary-accent);
+}
+
+/* 1024px: Align footer by 2*2 with equal space */
+@media (max-width: 1024px) {
+    .footer-top.grid-4,
+    .footer-top {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 40px 32px !important;
+    }
+}
+
+/* Mobile: Stack footer widgets with equal spacing */
+@media (max-width: 640px) {
+    .footer-top.grid-4,
+    .footer-top {
+        grid-template-columns: 1fr !important;
+        gap: 36px !important;
+    }
 }
 
 /* Table */
@@ -2174,11 +2238,13 @@ th {
     color: var(--primary-accent);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .sidebar-mobile-profile {
         display: flex;
     }
+}
 
+@media (max-width: 768px) {
     /* Hide desktop actions from dashboard navbar on mobile views */
     .dashboard-navbar #themeToggle,
     .dashboard-navbar #rtlToggle,
@@ -3046,13 +3112,180 @@ th {
     }
 }
 
+/* Pre-Footer Action Button Container Base Rules */
+.cta-home-1-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.cta-home-1-actions .btn {
+    height: 54px;
+    padding: 0 36px;
+    font-size: 16px;
+}
+
+.cta-about-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.cta-about-actions .btn {
+    height: 52px;
+    padding: 0 36px;
+    font-size: 15.5px;
+}
+
+.cta-activities-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.cta-activities-actions .btn {
+    height: 48px;
+    padding: 0 28px;
+    font-size: 14.5px;
+}
+
+.cta-packages-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.cta-packages-actions .btn {
+    height: 44px;
+    padding: 0 20px;
+    font-size: 14px;
+}
+
+/* Item 9: Passes CTA actions bar with ample padding and margin to prevent line overlap */
+.cta-passes-actions-bar {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-top: 24px;
+    margin-top: 24px;
+    border-top: 1px solid var(--border-color);
+}
+.cta-passes-actions-bar .btn {
+    height: 48px;
+    padding: 0 28px;
+    font-size: 14.5px;
+}
+
+/* Item 7: Dashboard Sidebar Close / Exit Icon */
+.dashboard-sidebar-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dashboard-sidebar-close {
+    display: none;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--text-primary);
+    padding: 8px 12px;
+    border-radius: 8px;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.dashboard-sidebar-close:hover {
+    color: var(--primary-accent);
+    background: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .dashboard-sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 1024px) {
+    .dashboard-sidebar-close {
+        display: flex !important;
+    }
+}
+
 @media (max-width: 600px) {
     .cta-home-1-card,
+    .cta-home-2-weather-card,
+    .cta-home-2-dispatch-card,
     .cta-about-card,
     .cta-activities-card,
     .cta-packages-card,
     .cta-passes-body {
-        padding: 36px 20px !important;
+        padding: 32px 18px !important;
+    }
+
+    /* Item 2: Home 2 Live Trail Conditions Card Mobile Alignment */
+    .cta-home-2-weather-card {
+        text-align: left;
+    }
+    .cta-home-2-weather-header-top {
+        display: flex;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
+        margin-bottom: 18px !important;
+    }
+    .cta-home-2-weather-temp-row {
+        display: flex;
+        flex-wrap: wrap !important;
+        align-items: baseline !important;
+        gap: 10px !important;
+        margin-bottom: 14px !important;
+    }
+    .cta-home-2-quote-card {
+        padding: 14px 16px !important;
+        gap: 12px !important;
+        border-radius: 14px !important;
+    }
+
+    /* Items 1, 3, 4: Equal button sizing in mobile view (368px) */
+    .cta-home-1-actions,
+    .cta-about-actions,
+    .cta-activities-actions,
+    .cta-packages-actions,
+    .cta-passes-actions-bar {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 12px !important;
+    }
+
+    .cta-home-1-actions .btn,
+    .cta-about-actions .btn,
+    .cta-activities-actions .btn,
+    .cta-packages-actions .btn,
+    .cta-passes-actions-bar .btn {
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+
+    /* Item 9: Passes CTA line clearance & span alignment on mobile */
+    .cta-passes-actions-bar {
+        padding-top: 20px !important;
+        margin-top: 20px !important;
+    }
+    .cta-passes-actions-bar span {
+        margin-left: 0 !important;
+        text-align: center !important;
+        width: 100% !important;
+        margin-top: 6px !important;
+        display: block !important;
     }
 }
 

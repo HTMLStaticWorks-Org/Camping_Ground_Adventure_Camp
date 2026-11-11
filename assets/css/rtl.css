@@ -117,9 +117,9 @@
 }
 
 /* ===========================
-   Mobile Nav Menu
+   Mobile Nav Menu (1024px and below)
    =========================== */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     [dir="rtl"] .nav-menu {
         right: auto;
         left: 0;
