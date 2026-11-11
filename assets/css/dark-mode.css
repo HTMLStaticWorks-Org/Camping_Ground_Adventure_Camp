@@ -1,0 +1,85 @@
+[data-theme="dark"] {
+    --primary-bg: #0B1911;
+    --secondary-bg: #12261A;
+    --card-bg: #1A3324;
+    --text-primary: #F0F7F2;
+    --text-secondary: #A3C9B3;
+    --border-color: #284D37;
+    
+    --primary-accent: #74C69D;
+    --secondary-accent: #52B788;
+    --shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.3), 0 2px 8px -2px rgba(0, 0, 0, 0.2);
+    --shadow-hover: 0 20px 40px -8px rgba(0, 0, 0, 0.5), 0 12px 16px -6px rgba(0, 0, 0, 0.4);
+
+    /* Override light-mode section palette vars for dark mode */
+    --section-alt-bg: #12261A;
+    --section-accent-bg: #1A3324;
+    --section-warm-bg: #0B1911;
+}
+
+/* Neutralize light-mode section differentiation in dark mode */
+[data-theme="dark"] section.premium-section:not(.bg-secondary):nth-of-type(2) {
+    background-color: var(--primary-bg) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] section.premium-section.bg-secondary:nth-of-type(3) {
+    background: var(--secondary-bg) !important;
+}
+
+[data-theme="dark"] section.bg-secondary:not(.premium-section) {
+    background-color: var(--secondary-bg) !important;
+    border-top: 1px solid var(--border-color) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] section.premium-section:not(.bg-secondary):nth-of-type(5) {
+    background-color: var(--primary-bg) !important;
+    border-top: 3px solid var(--border-color) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+[data-theme="dark"] .navbar {
+    background: rgba(11, 25, 17, 0.88);
+}
+
+[data-theme="dark"] .btn-primary {
+    background-color: var(--primary-accent);
+    color: #0B1911;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+    background-color: #52B788;
+}
+
+[data-theme="dark"] .btn-secondary {
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+    background: var(--primary-accent) !important;
+    color: #0B1911 !important;
+    border-color: var(--primary-accent) !important;
+}
+
+[data-theme="dark"] .action-icon {
+    background-color: var(--secondary-bg);
+}
+
+[data-theme="dark"] .card-icon {
+    background-color: #12261A;
+}
+
+/* Images opacity slightly lowered in dark mode to reduce glare */
+[data-theme="dark"] img {
+    opacity: 0.9;
+}
+
+/* Invert calendar/time picker indicators in dark mode for better visibility */
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator,
+[data-theme="dark"] input[type="month"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) brightness(1.2);
+    cursor: pointer;
+}

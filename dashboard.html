@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Dashboard | WildCamp</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+    <style>
+        /* Dashboard Layout Overrides */
+        body { margin: 0; }
+        .dashboard-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+        .dashboard-sidebar {
+            top: 0 !important;
+            height: 100vh !important;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000 !important;
+            padding-top: 0 !important;
+        }
+        .dashboard-sidebar-brand {
+            height: 72px !important;
+            min-height: 72px !important;
+            box-sizing: border-box !important;
+            padding: 0 32px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .dashboard-sidebar-brand .nav-brand {
+            margin: 0;
+            padding: 0;
+        }
+        .dashboard-nav-wrapper {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .dashboard-main-area {
+            flex: 1;
+            margin-left: 280px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .dashboard-navbar {
+            position: fixed;
+            top: 0;
+            left: 280px;
+            z-index: 99;
+            width: calc(100% - 280px);
+            height: 72px !important;
+            min-height: 72px !important;
+            box-sizing: border-box !important;
+            background: var(--primary-bg);
+            border-bottom: 1px solid #CBD5E1 !important; /* Darker border to clearly show navbar boundary */
+        }
+        .dashboard-content {
+            margin-left: 0 !important;
+            padding: 0 32px 32px 32px !important;
+            padding-top: 72px !important; /* Flush against fixed navbar */
+            min-height: 100vh !important;
+        }
+        .dashboard-section h2 {
+            margin-top: 0 !important;
+            padding-top: 0 !important; /* Absolute zero gap, perfectly flush */
+            line-height: 1 !important; /* Strip invisible font height */
+        }
+        .mobile-only-brand {
+            display: none;
+        }
+        /* ── 1024px: Slim sidebar + fix content grids ── */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            /* Narrow the sidebar */
+            .dashboard-sidebar { width: 220px !important; }
+
+            /* Shift main area and navbar to match narrower sidebar */
+            .dashboard-main-area { margin-left: 220px !important; }
+            .dashboard-navbar {
+                left: 220px !important;
+                width: calc(100% - 220px) !important;
+            }
+
+            /* Reduce inner content padding */
+            .dashboard-content {
+                padding: 0 20px 20px 20px !important;
+            }
+
+            /* RTL adjustments for narrower sidebar at 1024px */
+            [dir="rtl"] .dashboard-main-area { margin-right: 220px !important; margin-left: 0 !important; }
+            [dir="rtl"] .dashboard-navbar { right: 220px !important; left: 0 !important; }
+
+            /* Stat cards row: 2 columns instead of 4 */
+            .dashboard-section .grid-4 {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 16px !important;
+            }
+
+            /* Inner 3-column grids: 2 columns */
+            .dashboard-section .grid-3 {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 16px !important;
+            }
+
+            /* Inner 2-column grids: stay 2-col but reduce gap */
+            .dashboard-section .grid-2 {
+                gap: 16px !important;
+            }
+
+            /* Sidebar nav font — slightly smaller to fit 220px */
+            .dashboard-nav li a {
+                font-size: 13.5px !important;
+                padding: 12px 20px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-main-area { margin-left: 0; }
+            .mobile-only-brand { display: flex !important; }
+            .dashboard-navbar {
+                left: 0;
+                width: 100%;
+            }
+        }
+
+        /* ── 360px: Fix tutor row button overlap ── */
+        @media (max-width: 400px) {
+            /* Wrap the row: info on top, button below */
+            .care-team-row {
+                flex-wrap: wrap !important;
+                gap: 12px !important;
+            }
+
+            /* Let the info block take full width */
+            .care-team-info {
+                flex: 1 1 100% !important;
+                width: 100% !important;
+            }
+
+            /* Button: full width, or right-aligned below */
+            .care-team-row > .btn {
+                align-self: flex-start !important;
+                margin-left: 64px !important; /* indent under avatar */
+                flex-shrink: 0 !important;
+            }
+
+            /* Reduce stat card font sizes so they don't overflow at 360px */
+            .dashboard-section .grid-4 {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 12px !important;
+            }
+
+            .dashboard-section .grid-4 .card {
+                padding: 16px !important;
+            }
+
+            .dashboard-section .grid-4 .card div[style*="font-size: 20px"] {
+                font-size: 16px !important;
+            }
+
+            /* Stack grid-2 to single column at 360px */
+            .dashboard-section .grid-2 {
+                grid-template-columns: 1fr !important;
+                gap: 20px !important;
+            }
+
+            /* Reduce content horizontal padding */
+            .dashboard-content {
+                padding: 0 16px 16px 16px !important;
+            }
+        }
+
+        /* RTL Layout — must live here to outrank the margin-left/left above */
+        [dir="rtl"] .dashboard-sidebar {
+            left: auto !important;
+            right: 0 !important;
+            border-right: none !important;
+            border-left: 1px solid var(--border-color) !important;
+        }
+        [dir="rtl"] .dashboard-main-area {
+            margin-left: 0 !important;
+            margin-right: 280px !important;
+        }
+        /* dashboard-content is INSIDE main-area — zero out both margins so there's no double offset */
+        [dir="rtl"] .dashboard-content {
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+        [dir="rtl"] .dashboard-navbar {
+            left: 0 !important;
+            right: 280px !important;
+            width: auto !important;
+        }
+        /* Flip nav-actions to the LEFT in RTL (reading-start side = right, but controls should anchor to right edge near sidebar) */
+        [dir="rtl"] .dashboard-navbar .nav-actions {
+            margin-left: 0 !important;
+            margin-right: auto !important;
+        }
+        [dir="rtl"] .dashboard-sidebar .nav-brand {
+            flex-direction: row-reverse;
+        }
+        [dir="rtl"] .dashboard-nav li a {
+            flex-direction: row-reverse;
+            border-left: none;
+            border-right: 4px solid transparent;
+            padding-left: 32px;
+            padding-right: 32px;
+        }
+        [dir="rtl"] .dashboard-nav li a:hover,
+        [dir="rtl"] .dashboard-nav li a.active {
+            border-right-color: var(--primary-accent);
+            border-left-color: transparent;
+        }
+        @media (max-width: 1024px) {
+            [dir="rtl"] .dashboard-sidebar {
+                transform: translateX(100%) !important;
+                right: 0 !important;
+                left: auto !important;
+            }
+            [dir="rtl"] .dashboard-sidebar.open {
+                transform: translateX(0) !important;
+            }
+            [dir="rtl"] .dashboard-main-area {
+                margin-right: 0 !important;
+            }
+            [dir="rtl"] .dashboard-navbar {
+                right: 0 !important;
+                left: 0 !important;
+            }
+        }
+
+        /* RTL Component — Care Team rows */
+        [dir="rtl"] .care-team-row {
+            flex-direction: row-reverse !important;
+        }
+        [dir="rtl"] .care-team-info {
+            flex-direction: row-reverse !important;
+        }
+        [dir="rtl"] .care-team-info > div {
+            text-align: right;
+        }
+
+        /* RTL Component — Recent Care Update rows */
+        [dir="rtl"] .care-update-row {
+            flex-direction: row-reverse !important;
+        }
+        [dir="rtl"] .care-update-row > div:last-child {
+            text-align: right;
+        }
+
+        /* RTL Component — Stat cards text alignment */
+        [dir="rtl"] .grid-4 .card,
+        [dir="rtl"] .grid-2 .card {
+            text-align: right;
+        }
+
+        /* RTL Component — Chat input bar */
+        [dir="rtl"] .chat-input-bar {
+            flex-direction: row-reverse;
+        }
+
+        /* RTL — Navbar user info: flip border from left to right */
+        [dir="rtl"] .user-info-divider {
+            border-left: none !important;
+            border-right: 1px solid var(--border-color) !important;
+            padding-left: 0 !important;
+            padding-right: 10px !important;
+        }
+
+        /* Subscriptions Section Responsiveness */
+        .billing-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            width: 100%;
+        }
+
+        .billing-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+            width: 100%;
+        }
+
+        .billing-details-card {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            border-left: 4px solid var(--primary-accent);
+            width: 100%;
+            height: 100%;
+        }
+
+        .billing-grid-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px 24px;
+            margin-bottom: 32px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+
+        .billing-actions {
+            display: flex;
+            gap: 16px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 24px;
+        }
+
+        .billing-actions .btn {
+            flex: 1;
+            height: 48px;
+            font-size: 14px;
+        }
+
+        /* Responsive styling for Subscriptions */
+        @media (max-width: 768px) {
+            .billing-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 12px;
+            }
+            .billing-details-card {
+                max-width: 550px;
+                margin: 0 auto 32px auto; /* Centered in 768px */
+                padding: 24px;
+                height: auto !important; /* Force height to expand naturally */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .billing-card-header {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 12px;
+            }
+            .billing-details-card {
+                padding: 20px;
+                height: auto !important; /* Force height to expand naturally */
+            }
+            .billing-grid-details {
+                grid-template-columns: 1fr !important; /* Stacks vertically to prevent horizontal overflow */
+                gap: 16px;
+            }
+            .billing-actions {
+                flex-direction: column !important; /* Stacks buttons vertically to prevent horizontal overflow */
+                gap: 12px;
+            }
+            .billing-actions .btn {
+                width: 100% !important;
+                flex: none !important; /* Reset flex to prevent vertical squishing */
+                height: 48px !important; /* Lock the height at 48px */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-layout">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar">
+            <div class="dashboard-sidebar-brand">
+                <a href="index.html" class="nav-brand">
+                    <img src="assets/images/logo.svg" alt="WildCamp Logo" class="nav-brand-img">
+                    <span>Wild<span class="brand-accent">Camp</span></span>
+                </a>
+            </div>
+            
+            <!-- Mobile Profile & Controls (Visible on mobile only) -->
+            <div class="sidebar-mobile-profile">
+                <div class="mobile-user-info">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="User" class="mobile-avatar" style="object-fit: cover;">
+                    <span class="mobile-username">John Doe</span>
+                </div>
+                <div class="mobile-actions">
+                    <button class="action-icon theme-toggle-btn" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </button>
+                    <button class="action-icon rtl-toggle-btn" aria-label="Toggle RTL" title="Toggle RTL">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><polyline points="16 3 21 8 16 13"/><line x1="21" y1="8" x2="9" y2="8"/><polyline points="8 21 3 16 8 11"/><line x1="3" y1="16" x2="15" y2="16"/></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="dashboard-nav-wrapper">
+                <ul class="dashboard-nav">
+                    <li><a href="#overview" class="active">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="9" x2="9" y2="17"/><line x1="15" y1="13" x2="15" y2="17"/><line x1="12" y1="5" x2="12" y2="17"/></svg>
+                        Guest Overview
+                    </a></li>
+                    <li><a href="#bookings">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        Book Tents &amp; Activities
+                    </a></li>
+                    <li><a href="#logs">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        View Itineraries
+                    </a></li>
+                    <li><a href="#materials">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                        Trail Maps &amp; Guides
+                    </a></li>
+                    <li><a href="#rangers">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2.5 3 6 3s6-1 6-3v-5"/></svg>
+                        Camp Rangers
+                    </a></li>
+                    <li><a href="#messages">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Ranger Messages
+                    </a></li>
+                    <li><a href="#billing">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        Manage Payments
+                    </a></li>
+                    <li><a href="#reports">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                        Adventure Readiness
+                    </a></li>
+                    <li><a href="#settings">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        Guest Settings
+                    </a></li>
+                    <li style="margin-top: 32px; border-top: 1px solid var(--border-color); padding-top: 16px;"><a href="index.html" style="color: #e74c3c;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px; vertical-align: middle;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                        Logout
+                    </a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Area -->
+        <div class="dashboard-main-area">
+            <nav class="navbar dashboard-navbar">
+                <div class="container" style="max-width: 100%; padding: 0 32px;">
+                    <div class="mobile-only-brand">
+                        <a href="index.html" class="nav-brand">
+                            <img src="assets/images/logo.svg" alt="WildCamp Logo" class="nav-brand-img">
+                            <span>Wild<span class="brand-accent">Camp</span></span>
+                        </a>
+                    </div>
+                    <div class="nav-actions" style="flex-wrap: nowrap; gap: 10px; margin-left: auto;">
+                        <button id="themeToggle" class="action-icon" aria-label="Toggle Dark Mode" title="Toggle Dark Mode"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+                        <button id="rtlToggle" class="action-icon" aria-label="Toggle RTL" title="Toggle RTL"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><polyline points="16 3 21 8 16 13"/><line x1="21" y1="8" x2="9" y2="8"/><polyline points="8 21 3 16 8 11"/><line x1="3" y1="16" x2="15" y2="16"/></svg></button>
+                        <div class="user-info-divider" style="display: flex; align-items: center; gap: 8px; border-left: 1px solid var(--border-color); padding-left: 10px;">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="User" style="width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0; object-fit: cover;">
+                            <span class="dashboard-username" style="font-weight: 500; white-space: nowrap;">John Doe</span>
+                        </div>
+                        <button class="mobile-menu-toggle action-icon" id="dashboardMenuToggle" aria-label="Toggle Menu">☰</button>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="dashboard-content">
+            
+            <!-- 1. Overview -->
+            <section id="overview" class="dashboard-section active" style="padding: 0;">
+                <h2 style="margin-bottom: 32px;">Welcome back, John</h2>
+                <div class="grid-4" style="margin-bottom: 40px;">
+                    <div class="card" style="padding: 24px;">
+                        <h4 style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">Upcoming Tent Check-In</h4>
+                        <div style="font-size: 20px; font-weight: 500;">Tomorrow, 2:00 PM</div>
+                        <p style="color: var(--primary-accent); margin-top: 8px;">Alpine Ridge Safari Tent #4</p>
+                    </div>
+                    <div class="card" style="padding: 24px;">
+                        <h4 style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">Active Camp Package</h4>
+                        <div style="font-size: 20px; font-weight: 500;">Starlight Glamping Pass</div>
+                        <p style="color: var(--text-secondary); margin-top: 8px;">3 Nights &bull; All-Inclusive</p>
+                    </div>
+                    <div class="card" style="padding: 24px;">
+                        <h4 style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">Itinerary Readiness</h4>
+                        <div style="font-size: 20px; font-weight: 500;">Confirmed: 94%</div>
+                        <p style="color: var(--support-accent); margin-top: 8px;">Weather Clear - 2 hours ago</p>
+                    </div>
+                    <div class="card" style="padding: 24px; background: #FFF4E5; border-color: #FFE0B2;">
+                        <h4 style="color: #E65100; font-size: 14px; margin-bottom: 8px;">Pending Gear &amp; Booking</h4>
+                        <div style="font-size: 20px; font-weight: 500; color: #E65100;">Night Trek &amp; Dome Setup</div>
+                        <p style="color: #E65100; margin-top: 8px;">54% Ready - confirm slot</p>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="gap: 32px;">
+                    <!-- Recent Care Updates -> Recent Itinerary Updates -->
+                    <div class="card" style="padding: 32px;">
+                        <h3 style="margin-bottom: 24px; font-size: 20px;">Recent Itinerary Updates</h3>
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            <div class="care-update-row" style="display: flex; gap: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+                                <div style="width: 48px; height: 48px; background: var(--secondary-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-accent); flex-shrink: 0;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                                </div>
+                                <div>
+                                    <h4 style="font-size: 16px; margin-bottom: 4px;">Tent Pitch &amp; Firepit Reserved</h4>
+                                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">Alpine Ridge Safari Tent #4 stocked with dry birch firewood and lanterns.</p>
+                                    <span style="font-size: 12px; color: var(--text-secondary);">Today, 10:30 AM</span>
+                                </div>
+                            </div>
+                            <div class="care-update-row" style="display: flex; gap: 16px; border-bottom: 1px solid var(--border-color); padding-bottom: 16px;">
+                                <div style="width: 48px; height: 48px; background: var(--secondary-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-accent); flex-shrink: 0;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                                </div>
+                                <div>
+                                    <h4 style="font-size: 16px; margin-bottom: 4px;">Adventure Itinerary Updated</h4>
+                                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">Lead Ranger adjusted your sunrise summit hike and zipline departure window.</p>
+                                    <span style="font-size: 12px; color: var(--text-secondary);">Today, 9:00 AM</span>
+                                </div>
+                            </div>
+                            <div class="care-update-row" style="display: flex; gap: 16px;">
+                                <div style="width: 48px; height: 48px; background: var(--secondary-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-accent); flex-shrink: 0;">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2.5 3 6 3s6-1 6-3v-5"/></svg>
+                                </div>
+                                <div>
+                                    <h4 style="font-size: 16px; margin-bottom: 4px;">Whitewater Kayak Gear Sizing</h4>
+                                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 8px;">David Chen confirmed your drysuit, helmet, and carbon paddle reservation.</p>
+                                    <span style="font-size: 12px; color: var(--text-secondary);">Yesterday, 8:00 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#logs" style="display: inline-block; margin-top: 24px; color: var(--primary-accent); font-weight: 500; text-decoration: none;">View all itinerary records</a>
+                    </div>
+                    
+                    <!-- Quick Actions & Team -->
+                    <div style="display: flex; flex-direction: column; gap: 32px;">
+                        <div class="card" style="padding: 32px;">
+                            <h3 style="margin-bottom: 24px; font-size: 20px;">Your Assigned Rangers</h3>
+                            <div class="care-team-row" style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 16px;">
+                                <div class="care-team-info" style="display: flex; align-items: center; gap: 16px;">
+                                    <img src="assets/images/author_sarah.png" alt="Sarah Jenkins, WFR" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+                                    <div>
+                                        <h4 style="font-size: 16px; margin-bottom: 4px;">Sarah Jenkins, WFR</h4>
+                                        <p style="color: var(--text-secondary); font-size: 14px;">Lead Alpine Ranger</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 14px; height: auto;">Message</button>
+                            </div>
+                            <div class="care-team-row" style="display: flex; align-items: center; justify-content: space-between;">
+                                <div class="care-team-info" style="display: flex; align-items: center; gap: 16px;">
+                                    <img src="https://www.ey.com/adobe/dynamicmedia/deliver/dm-aid--a990ed18-0570-4174-b17d-095d8e08e738/ey-david-chen-v2.jpg?preferwebp=true&quality=85&width=1100" alt="David Chen, ACA" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+                                    <div>
+                                        <h4 style="font-size: 16px; margin-bottom: 4px;">David Chen, ACA</h4>
+                                        <p style="color: var(--text-secondary); font-size: 14px;">Whitewater Kayak Guide</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 14px; height: auto;">Message</button>
+                            </div>
+                        </div>
+
+                        <div class="card" style="padding: 32px; background: var(--section-alt-bg); color: var(--text-primary); border: 1px solid var(--border-color);">
+                            <h3 style="margin-bottom: 16px; font-size: 20px; color: var(--text-primary);">Need immediate camp support?</h3>
+                            <p style="margin-bottom: 24px; font-size: 14px; color: var(--text-secondary);">Our basecamp dispatch rangers are available 24/7 for check-in help, firewood delivery, or trail assistance.</p>
+                            <button class="btn btn-primary" style="font-weight: 500; padding: 12px 24px; border-radius: 8px; border: none; cursor: pointer;">Call Basecamp Dispatch</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. Book Tents & Activities (Interactive Configurator) -->
+            <section id="bookings" class="dashboard-section" style="padding: 0;">
+                <h2 style="margin-bottom: 32px;">Book Tents &amp; Activities</h2>
+                <div id="quizSelection" class="grid-3" style="gap: 24px;">
+                    <div class="card" style="padding: 28px; display: flex; flex-direction: column;">
+                        <span style="background: rgba(27, 67, 50, 0.1); color: var(--primary-accent); padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600; align-self: flex-start; margin-bottom: 16px;">PINEWOOD CAMPSITE</span>
+                        <h3 style="font-size: 20px; margin-bottom: 12px;">Alpine Ridge Tent Booking</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; flex-grow: 1;">A 4-step interactive reservation &amp; safety check for your pinewood canvas tent pitch and campfire setup.</p>
+                        <button class="btn btn-primary" onclick="startBookingFlow('tent')" style="width: 100%; height: 48px; font-size: 14px;">Book Tent Pitch</button>
+                    </div>
+                    <div class="card" style="padding: 28px; display: flex; flex-direction: column;">
+                        <span style="background: rgba(45, 106, 79, 0.12); color: var(--secondary-accent); padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600; align-self: flex-start; margin-bottom: 16px;">RIVER &amp; CANYON</span>
+                        <h3 style="font-size: 20px; margin-bottom: 12px;">Kayak &amp; Zipline Activity Slot</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; flex-grow: 1;">Reserve guided Class III whitewater kayaking and cliffside canopy ziplining with gear verification.</p>
+                        <button class="btn btn-primary" onclick="startBookingFlow('kayak')" style="width: 100%; height: 48px; font-size: 14px;">Book Activity Slot</button>
+                    </div>
+                    <div class="card" style="padding: 28px; display: flex; flex-direction: column;">
+                        <span style="background: rgba(217, 119, 6, 0.15); color: var(--primary-accent); padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600; align-self: flex-start; margin-bottom: 16px;">STARGAZER OUTPOST</span>
+                        <h3 style="font-size: 20px; margin-bottom: 12px;">Starlight Glamping &amp; Night Trek</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; flex-grow: 1;">Complete your luxury geodesic dome check-in, night trek headlamp prep, and astronomy trail briefing.</p>
+                        <button class="btn btn-primary" onclick="startBookingFlow('glamping')" style="width: 100%; height: 48px; font-size: 14px;">Book Glamping &amp; Trek</button>
+                    </div>
+                </div>
+
+                <!-- Active Booking / Check-In Flow (Hidden by default) -->
+                <div id="quizContainer" class="card" style="padding: 40px; display: none; max-width: 800px; margin: 0 auto; box-shadow: var(--shadow-hover);">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 24px;">
+                        <h3 id="quizTitle" style="font-size: 22px; margin: 0;">Tent &amp; Activity Booking</h3>
+                        <span id="questionTimer" style="font-weight: 600; color: var(--secondary-accent);">Step 1 of 4</span>
+                    </div>
+                    <div id="quizQuestion" style="font-size: 18px; font-weight: 500; margin-bottom: 24px;">Select your preference:</div>
+                    <div id="quizOptions" style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 32px;">
+                        <!-- Options filled by JS -->
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <button class="btn btn-secondary" onclick="exitQuiz()" style="height: 48px; padding: 0 24px;">Cancel</button>
+                        <button id="nextQuestionBtn" class="btn btn-primary" onclick="submitAnswer()" style="height: 48px; padding: 0 32px;">Confirm Step</button>
+                    </div>
+                </div>
+
+                <!-- Booking Confirmation Summary (Hidden by default) -->
+                <div id="quizResult" class="card" style="padding: 40px; display: none; max-width: 600px; margin: 0 auto; text-align: center; box-shadow: var(--shadow-hover);">
+                    <div style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; background: rgba(45, 106, 79, 0.12); border-radius: 50%; margin: 0 auto 24px; color: var(--primary-accent);">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"/><path d="M12 2a6 6 0 0 1 6 6v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8a6 6 0 0 1 6-6z"/></svg>
+                    </div>
+                    <h3 style="font-size: 24px; margin-bottom: 8px;">Booking &amp; Safety Check Complete!</h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Your reservation has been synced with your guest itinerary logs and adventure readiness report.</p>
+                    <div style="font-size: 36px; font-weight: 700; color: var(--primary-accent); margin-bottom: 8px;" id="quizScoreText">Readiness: 100%</div>
+                    <p id="quizFeedbackText" style="color: var(--text-secondary); margin-bottom: 32px;">All camp gear and safety protocols confirmed for your excursion.</p>
+                    <button class="btn btn-primary" onclick="resetQuizInterface()" style="height: 48px; padding: 0 32px;">Back to Bookings</button>
+                </div>
+
+                <!-- Request custom scheduling at bottom -->
+                <div class="grid-2 tab-stack" style="gap: 32px; margin-top: 64px; border-top: 1px solid var(--border-color); padding-top: 48px;">
+                    <div class="card" style="padding: 32px;">
+                        <h3 style="margin-bottom: 24px;">Schedule Custom Tent or Activity</h3>
+                        <form onsubmit="event.preventDefault(); alert('Tent &amp; Activity reservation request submitted to Basecamp!');">
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Check-In / Excursion Date</label>
+                                    <input type="date" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Preferred Time Slot</label>
+                                    <input type="time" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Tent or Adventure Selection</label>
+                                <select class="form-control">
+                                    <option>Alpine Ridge Canvas Safari Tent</option>
+                                    <option>Whitewater Kayaking &amp; Gorge Run</option>
+                                    <option>Canyon Canopy Zipline Tour</option>
+                                    <option>Starlight Geodesic Glamping Dome</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Gear Sizing &amp; Campfire Notes (Optional)</label>
+                                <textarea class="form-control" rows="3" placeholder="List extra sleeping bags, kayak drysuit sizes, or campfire dining requests..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Confirm Reservation Request</button>
+                        </form>
+                    </div>
+                    <div>
+                        <div class="card" style="padding: 32px; height: 100%;">
+                            <h3 style="margin-bottom: 24px;">Upcoming Confirmed Bookings</h3>
+                            <div style="display: flex; flex-direction: column; gap: 16px;">
+                                <div style="padding: 16px; border: 1px solid var(--border-color); border-radius: 12px; border-left: 4px solid var(--primary-accent);">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                        <h4 style="font-size: 16px;">Alpine Ridge Safari Tent #4</h4>
+                                        <span style="background: rgba(5, 150, 105, 0.1); color: var(--primary-accent); padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Confirmed</span>
+                                    </div>
+                                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 4px;">Tomorrow &bull; Check-In 2:00 PM</p>
+                                    <p style="color: var(--text-primary); font-size: 14px;">Assigned Ranger: Sarah Jenkins, WFR</p>
+                                </div>
+                                <div style="padding: 16px; border: 1px solid var(--border-color); border-radius: 12px; border-left: 4px solid var(--secondary-accent);">
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                                        <h4 style="font-size: 16px;">Whitewater Kayak &amp; Zipline Run</h4>
+                                        <span style="background: rgba(5, 150, 105, 0.1); color: var(--primary-accent); padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Confirmed</span>
+                                    </div>
+                                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 4px;">Friday, Jun 19 &bull; 9:00 AM - 12:30 PM</p>
+                                    <p style="color: var(--text-primary); font-size: 14px;">Assigned Guide: David Chen, ACA</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2.5 Trail Maps & Guides Section -->
+            <section id="materials" class="dashboard-section" style="padding: 0;">
+                <h2 style="margin-bottom: 32px;">Trail Maps &amp; Field Guides</h2>
+                <p class="subheading" style="margin-bottom: 40px;">Download offline topographic trail maps, backcountry packing checklists, and star charts prepared by certified WildCamp rangers.</p>
+                <div class="grid-3" style="gap: 24px;">
+                    <div class="card" style="padding: 24px; display: flex; flex-direction: column;">
+                        <div style="width: 48px; height: 48px; background: var(--secondary-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--primary-accent);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                        </div>
+                        <h3 style="font-size: 18px; margin-bottom: 8px;">Whispering Woods Topographic Map</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; flex-grow: 1;">Elevation contours, emergency ranger shelters, fresh spring water sources, and ridge viewpoints.</p>
+                        <button class="btn btn-secondary" onclick="triggerDownload('Whispering Woods Topographic Map')" style="width: 100%; height: 44px; font-size: 14px; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                            Download PDF
+                        </button>
+                    </div>
+                    <div class="card" style="padding: 24px; display: flex; flex-direction: column;">
+                        <div style="width: 48px; height: 48px; background: var(--secondary-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--primary-accent);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.586a1 1 0 0 1-.293.707l-6.414 6.414A2 2 0 0 0 4.707 20h14.586a2 2 0 0 0 1.414-3.414l-6.414-6.414A1 1 0 0 1 14 9.586V2h-4z"/></svg>
+                        </div>
+                        <h3 style="font-size: 18px; margin-bottom: 8px;">All-Season Gear &amp; Packing Guide</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; flex-grow: 1;">Essential layering checklists, waterproof footwear standards, and backcountry safety kit items.</p>
+                        <button class="btn btn-secondary" onclick="triggerDownload('All-Season Gear and Packing Guide')" style="width: 100%; height: 44px; font-size: 14px; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                            Download PDF
+                        </button>
+                    </div>
+                    <div class="card" style="padding: 24px; display: flex; flex-direction: column;">
+                        <div style="width: 48px; height: 48px; background: var(--secondary-bg); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; color: var(--primary-accent);">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+                        </div>
+                        <h3 style="font-size: 18px; margin-bottom: 8px;">Night Sky &amp; Leave-No-Trace Guide</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; flex-grow: 1;">Seasonal constellation charts, campfire containment rules, and wildlife food storage protocols.</p>
+                        <button class="btn btn-secondary" onclick="triggerDownload('Night Sky and Leave-No-Trace Guide')" style="width: 100%; height: 44px; font-size: 14px; display: flex; justify-content: center; align-items: center; gap: 8px;">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                            Download PDF
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. Logs -> Guest Itineraries & Booking Logs -->
+            <section id="logs" class="dashboard-section" style="padding: 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+                    <h2 style="margin: 0;">Guest Itineraries &amp; Booking Logs</h2>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <input type="month" class="form-control" style="width: auto; height: 40px;">
+                        <button class="btn btn-secondary" style="height: 40px; padding: 0 16px; display: flex; align-items: center;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>Export</button>
+                    </div>
+                </div>
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <div class="table-responsive">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead style="background: var(--secondary-bg); border-bottom: 1px solid var(--border-color);">
+                                <tr>
+                                    <th style="padding: 16px; text-align: left; font-weight: 500;">Date &amp; Time</th>
+                                    <th style="padding: 16px; text-align: left; font-weight: 500;">Camp Ranger</th>
+                                    <th style="padding: 16px; text-align: left; font-weight: 500;">Booking / Readiness</th>
+                                    <th style="padding: 16px; text-align: left; font-weight: 500;">Itinerary Notes &amp; Trail Details</th>
+                                    <th style="padding: 16px; text-align: left; font-weight: 500;">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quizLogsTableBody">
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 16px;"><div style="font-weight: 500;">Today</div><div style="color: var(--text-secondary); font-size: 13px;">10:30 AM</div></td>
+                                    <td style="padding: 16px;">Sarah Jenkins, WFR</td>
+                                    <td style="padding: 16px;"><span style="background: rgba(16, 185, 129, 0.1); color: var(--support-accent); padding: 4px 8px; border-radius: 4px; font-size: 13px;">Ready: 100%</span></td>
+                                    <td style="padding: 16px; color: var(--text-secondary); font-size: 14px; max-width: 300px;">Alpine Ridge Safari Tent #4 reserved. Firewood bundle &amp; bear-proof locker assigned.</td>
+                                    <td style="padding: 16px;"><span style="color: var(--support-accent); font-weight: 500;">Confirmed</span></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 16px;"><div style="font-weight: 500;">Yesterday</div><div style="color: var(--text-secondary); font-size: 13px;">4:00 PM</div></td>
+                                    <td style="padding: 16px;">David Chen, ACA</td>
+                                    <td style="padding: 16px;"><span style="background: rgba(16, 185, 129, 0.1); color: var(--support-accent); padding: 4px 8px; border-radius: 4px; font-size: 13px;">Ready: 90%</span></td>
+                                    <td style="padding: 16px; color: var(--text-secondary); font-size: 14px; max-width: 300px;">Whitewater Kayak &amp; Zipline slot booked. Drysuit &amp; harness fitting complete at Boathouse.</td>
+                                    <td style="padding: 16px;"><span style="color: var(--support-accent); font-weight: 500;">Confirmed</span></td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 16px;"><div style="font-weight: 500;">Jun 14, 2026</div><div style="color: var(--text-secondary); font-size: 13px;">8:00 AM</div></td>
+                                    <td style="padding: 16px;">Sarah Jenkins, WFR</td>
+                                    <td style="padding: 16px;"><span style="background: rgba(245, 158, 11, 0.1); color: #F59E0B; padding: 4px 8px; border-radius: 4px; font-size: 13px;">Ready: 54%</span></td>
+                                    <td style="padding: 16px; color: var(--text-secondary); font-size: 14px; max-width: 300px;">Starlight Glamping &amp; Night Trek pending gear check. Complete night safety briefing before departure.</td>
+                                    <td style="padding: 16px;"><span style="color: #F59E0B; font-weight: 500;">Action Needed</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. Camp Rangers -->
+            <section id="rangers" class="dashboard-section" style="padding: 0;">
+                <h2 style="margin-bottom: 32px;">Assigned Camp Rangers</h2>
+                <div class="grid-3">
+                    <div class="card" style="text-align: center; padding: 32px; display: flex; flex-direction: column; height: 100%;">
+                        <img src="assets/images/author_sarah.png" alt="Sarah Jenkins, WFR" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 16px; object-fit: cover;">
+                        <h3 style="font-size: 18px; margin-bottom: 4px;">Sarah Jenkins, WFR</h3>
+                        <span style="background: rgba(5, 150, 105, 0.1); color: var(--primary-accent); padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 500; display: inline-block; margin-bottom: 16px;">Lead Alpine Ranger</span>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Specializes in high-altitude ridge treks, tent pitch coordination, and backcountry navigation. 15 years wilderness leadership.</p>
+                        <div style="display: flex; gap: 12px; justify-content: center; margin-top: auto;">
+                            <button class="btn btn-primary" style="flex: 1; padding: 8px 0; font-size: 14px; height: auto;">Message</button>
+                            <button class="btn btn-secondary" style="flex: 1; padding: 8px 0; font-size: 14px; height: auto;">Schedule</button>
+                        </div>
+                    </div>
+                    <div class="card" style="text-align: center; padding: 32px; display: flex; flex-direction: column; height: 100%;">
+                        <img src="https://www.ey.com/adobe/dynamicmedia/deliver/dm-aid--a990ed18-0570-4174-b17d-095d8e08e738/ey-david-chen-v2.jpg?preferwebp=true&quality=85&width=1100" alt="David Chen, ACA" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 16px; object-fit: cover;">
+                        <h3 style="font-size: 18px; margin-bottom: 4px;">David Chen, ACA</h3>
+                        <span style="background: rgba(16, 185, 129, 0.1); color: var(--support-accent); padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 500; display: inline-block; margin-bottom: 16px;">Whitewater Kayak Guide</span>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Leads Class III-IV river expeditions, swiftwater rescue briefings, and cliffside canopy zipline excursions.</p>
+                        <div style="display: flex; gap: 12px; justify-content: center; margin-top: auto;">
+                            <button class="btn btn-primary" style="flex: 1; padding: 8px 0; font-size: 14px; height: auto;">Message</button>
+                            <button class="btn btn-secondary" style="flex: 1; padding: 8px 0; font-size: 14px; height: auto;">Schedule</button>
+                        </div>
+                    </div>
+                    <div class="card" style="text-align: center; padding: 32px; display: flex; flex-direction: column; height: 100%;">
+                        <img src="assets/images/author_michael.png" alt="Dr. Robert Smith" style="width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 16px; object-fit: cover;">
+                        <h3 style="font-size: 18px; margin-bottom: 4px;">Dr. Robert Smith</h3>
+                        <span style="background: rgba(5, 150, 105, 0.1); color: var(--primary-accent); padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 500; display: inline-block; margin-bottom: 16px;">Director of Camp Safety</span>
+                        <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 24px;">Oversees live weather radar monitoring, emergency satellite dispatch, and dark-sky astronomy night walks.</p>
+                        <div style="display: flex; gap: 12px; justify-content: center; margin-top: auto;">
+                            <button class="btn btn-primary" style="flex: 1; padding: 8px 0; font-size: 14px; height: auto;">Message</button>
+                            <button class="btn btn-secondary" style="flex: 1; padding: 8px 0; font-size: 14px; height: auto;">Review</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. Ranger Messages -->
+            <section id="messages" class="dashboard-section" style="padding: 0;">
+                <div class="chat-wrapper">
+                    <h2 style="margin-bottom: 24px; flex-shrink: 0;">Ranger Messages</h2>
+                    <div class="card chat-container" style="padding: 0; display: flex; overflow: hidden;">
+                    <!-- Chat Sidebar -->
+                    <div class="chat-sidebar" style="border-right: 1px solid var(--border-color); display: flex; flex-direction: column; background: var(--card-bg);">
+                        <div style="padding: 20px; border-bottom: 1px solid var(--border-color);">
+                            <input type="text" class="form-control" placeholder="Search conversations...">
+                        </div>
+                        <div style="flex-grow: 1; overflow-y: auto;">
+                            <!-- Active Chat -->
+                            <div style="padding: 16px 20px; border-bottom: 1px solid var(--border-color); background: rgba(27, 67, 50, 0.05); cursor: pointer; display: flex; gap: 12px; border-left: 3px solid var(--primary-accent);">
+                                <img src="assets/images/author_sarah.png" alt="Sarah Jenkins, WFR" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;">
+                                <div style="flex-grow: 1; min-width: 0;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                        <h4 style="font-size: 15px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Sarah Jenkins, WFR</h4>
+                                        <span style="font-size: 12px; color: var(--text-secondary);">10:42 AM</span>
+                                    </div>
+                                    <p style="margin: 0; font-size: 13px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Tent #4 is ready! Let me know if you need extra firewood.</p>
+                                </div>
+                            </div>
+                            <!-- Chat 2 -->
+                            <div style="padding: 16px 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; display: flex; gap: 12px; border-left: 3px solid transparent; transition: background 0.2s;" onmouseover="this.style.background='rgba(0,0,0,0.02)'" onmouseout="this.style.background='transparent'">
+                                <img src="assets/images/author_emily.png" alt="Passes &amp; Payments Desk" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover;">
+                                <div style="flex-grow: 1; min-width: 0;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                        <h4 style="font-size: 15px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Passes &amp; Payments Desk</h4>
+                                        <span style="font-size: 12px; color: var(--text-secondary);">Yesterday</span>
+                                    </div>
+                                    <p style="margin: 0; font-size: 13px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Your Starlight Glamping Pass payment was processed.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Chat Area -->
+                    <div style="flex-grow: 1; display: flex; flex-direction: column; background: var(--primary-bg);">
+                        <!-- Chat Header -->
+                        <div style="padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; justify-content: space-between; background: var(--card-bg);">
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <img src="assets/images/author_sarah.png" alt="Sarah Jenkins, WFR" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                                <div>
+                                    <h3 style="font-size: 16px; margin: 0;">Sarah Jenkins, WFR</h3>
+                                    <span style="font-size: 13px; color: var(--support-accent);">On Duty at Basecamp</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary" style="padding: 8px 16px; height: auto;">View Profile</button>
+                        </div>
+                        <!-- Chat Messages -->
+                        <div style="flex-grow: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px;">
+                            <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 16px;">
+                                <span style="font-size: 12px; color: var(--text-secondary); background: var(--card-bg); padding: 4px 12px; border-radius: 50px; border: 1px solid var(--border-color);">Today</span>
+                            </div>
+                            <!-- Received -->
+                            <div style="display: flex; gap: 12px; max-width: 80%;">
+                                <img src="assets/images/author_sarah.png" alt="Sarah Jenkins, WFR" style="width: 32px; height: 32px; border-radius: 50%; margin-top: auto; object-fit: cover;">
+                                <div style="background: var(--card-bg); padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 4px; border: 1px solid var(--border-color);">
+                                    <p style="margin: 0; font-size: 14px;">Good morning John! We've prepped Alpine Ridge Safari Tent #4 for your check-in tomorrow at 2:00 PM. Don't forget to complete your Night Trek gear check in the portal.</p>
+                                    <span style="font-size: 11px; color: var(--text-secondary); margin-top: 6px; display: block;">10:05 AM</span>
+                                </div>
+                            </div>
+                            <!-- Sent -->
+                            <div style="display: flex; gap: 12px; max-width: 80%; align-self: flex-end; flex-direction: row-reverse;">
+                                <div style="background: var(--primary-accent); color: white; padding: 12px 16px; border-radius: 16px; border-bottom-right-radius: 4px;">
+                                    <p style="margin: 0; font-size: 14px;">Hi Sarah, sounds awesome! I downloaded the Whispering Woods topographic trail map this morning and packed our hiking boots.</p>
+                                    <span style="font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 6px; display: block; text-align: right;">10:30 AM</span>
+                                </div>
+                            </div>
+                            <!-- Received -->
+                            <div style="display: flex; gap: 12px; max-width: 80%;">
+                                <img src="assets/images/author_sarah.png" alt="Sarah Jenkins, WFR" style="width: 32px; height: 32px; border-radius: 50%; margin-top: auto; object-fit: cover;">
+                                <div style="background: var(--card-bg); padding: 12px 16px; border-radius: 16px; border-bottom-left-radius: 4px; border: 1px solid var(--border-color);">
+                                    <p style="margin: 0; font-size: 14px;">Perfect! I updated your camp itinerary. Skies look crystal clear for tomorrow night's campfire and stargazing.</p>
+                                    <span style="font-size: 11px; color: var(--text-secondary); margin-top: 6px; display: block;">10:42 AM</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Chat Input -->
+                        <div class="chat-input-bar">
+                            <button class="chat-attach-btn" aria-label="Attach file" style="display: flex; align-items: center; justify-content: center;">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                            </button>
+                            <input type="text" class="chat-input-field" placeholder="Message your camp ranger...">
+                            <button class="chat-send-btn">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                                <span>Send</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <!-- 6. Manage Payments & Passes -->
+            <section id="billing" class="dashboard-section" style="padding: 0;">
+                <div class="billing-header">
+                    <h2 style="margin: 0;">Manage Payments &amp; Camp Passes</h2>
+                    <span style="background: rgba(16, 185, 129, 0.1); color: var(--support-accent); padding: 6px 16px; border-radius: 50px; font-size: 14px; font-weight: 600;">Status: Confirmed &amp; Paid</span>
+                </div>
+                
+                <div class="grid-2 tab-stack" style="gap: 32px; margin-bottom: 40px; align-items: stretch;">
+                    <!-- Active Subscription Details Card -->
+                    <div class="card billing-details-card">
+                        <div>
+                            <div class="billing-card-header">
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Active Camp Pass</span>
+                                    <h3 style="font-size: 24px; margin: 4px 0 0 0; font-weight: 600;">Glamping &amp; Trail Pass</h3>
+                                </div>
+                                <span style="background: var(--primary-accent); color: var(--primary-bg); padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600; white-space: nowrap;">$89.00 / night</span>
+                            </div>
+                            <div class="billing-grid-details">
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 12px; display: block; margin-bottom: 4px;">Reservation Duration</span>
+                                    <span style="font-weight: 500; font-size: 15px;">Weekend Stay Pass</span>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 12px; display: block; margin-bottom: 4px;">Next Scheduled Stay</span>
+                                    <span style="font-weight: 500; font-size: 15px;">Jul 01, 2026</span>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 12px; display: block; margin-bottom: 4px;">Payment Method</span>
+                                    <span style="font-weight: 500; font-size: 15px; display: inline-flex; align-items: center; gap: 8px;">
+                                        <svg width="24" height="15" viewBox="0 0 24 15" fill="none" style="vertical-align: middle;"><rect width="24" height="15" rx="2" fill="#1A1F71"/><circle cx="7" cy="7.5" r="4.5" fill="#EB001B"/><circle cx="11.5" cy="7.5" r="4.5" fill="#F79E1B" opacity="0.85"/></svg>
+                                        Visa ending in 4242
+                                    </span>
+                                </div>
+                                <div>
+                                    <span style="color: var(--text-secondary); font-size: 12px; display: block; margin-bottom: 4px;">Express Check-In Billing</span>
+                                    <span style="font-weight: 600; font-size: 15px; color: var(--support-accent);">Enabled</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="billing-actions">
+                            <button class="btn btn-primary">Upgrade Camp Pass</button>
+                            <button class="btn btn-secondary">Modify Reservation</button>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Billing Stats -->
+                    <div style="display: flex; flex-direction: column; gap: 24px;">
+                        <div class="card" style="padding: 28px; display: flex; align-items: center; justify-content: space-between;">
+                            <div>
+                                <h4 style="color: var(--text-secondary); font-size: 13px; margin: 0 0 8px 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Unbilled Gear Add-Ons</h4>
+                                <div style="font-size: 36px; font-weight: 700; color: var(--primary-accent); line-height: 1;">$0.00</div>
+                                <p style="color: var(--text-secondary); font-size: 13px; margin: 8px 0 0 0;">No extra gear rental or firewood charges pending.</p>
+                            </div>
+                            <div style="width: 56px; height: 56px; background: rgba(5, 150, 105, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-accent); flex-shrink: 0;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                            </div>
+                        </div>
+                        <div class="card" style="padding: 28px; display: flex; align-items: center; justify-content: space-between;">
+                            <div>
+                                <h4 style="color: var(--text-secondary); font-size: 13px; margin: 0 0 8px 0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Season Pass Settings</h4>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--text-primary);">Priority Camp Access</div>
+                                <p style="color: var(--text-secondary); font-size: 13px; margin: 6px 0 0 0;">Next reservation holds on July 01, 2026 via Card.</p>
+                            </div>
+                            <div style="width: 56px; height: 56px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--support-accent); flex-shrink: 0;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Invoice History Table -->
+                <h3 style="margin-bottom: 24px; font-size: 20px; font-weight: 600;">Payment &amp; Reservation Receipts</h3>
+                <div class="card" style="padding: 0; overflow: hidden;">
+                    <div class="table-responsive">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead style="background: var(--secondary-bg); border-bottom: 1px solid var(--border-color);">
+                                <tr>
+                                    <th style="padding: 18px 24px; text-align: left; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary);">Booking ID</th>
+                                    <th style="padding: 18px 24px; text-align: left; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary);">Stay Dates</th>
+                                    <th style="padding: 18px 24px; text-align: left; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary);">Amount</th>
+                                    <th style="padding: 18px 24px; text-align: left; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary);">Status</th>
+                                    <th style="padding: 18px 24px; text-align: right; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-secondary);">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 18px 24px; font-weight: 500;">#CAMP-2026-06</td>
+                                    <td style="padding: 18px 24px; color: var(--text-secondary);">Jun 18 - Jun 21, 2026</td>
+                                    <td style="padding: 18px 24px; font-weight: 600;">$89.00</td>
+                                    <td style="padding: 18px 24px;">
+                                        <span style="background: rgba(16, 185, 129, 0.1); color: var(--support-accent); padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600;">Paid</span>
+                                    </td>
+                                    <td style="padding: 18px 24px; text-align: right;">
+                                        <a href="#" class="btn-link" style="color: var(--primary-accent); display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--secondary-accent)'" onmouseout="this.style.color='var(--primary-accent)'">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                                            Receipt
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr style="border-bottom: 1px solid var(--border-color);">
+                                    <td style="padding: 18px 24px; font-weight: 500;">#CAMP-2026-05</td>
+                                    <td style="padding: 18px 24px; color: var(--text-secondary);">May 15 - May 17, 2026</td>
+                                    <td style="padding: 18px 24px; font-weight: 600;">$89.00</td>
+                                    <td style="padding: 18px 24px;">
+                                        <span style="background: rgba(16, 185, 129, 0.1); color: var(--support-accent); padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600;">Paid</span>
+                                    </td>
+                                    <td style="padding: 18px 24px; text-align: right;">
+                                        <a href="#" class="btn-link" style="color: var(--primary-accent); display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14px; text-decoration: none; transition: var(--transition);" onmouseover="this.style.color='var(--secondary-accent)'" onmouseout="this.style.color='var(--primary-accent)'">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                                            Receipt
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Adventure Readiness & Gear Checklist -->
+            <section id="reports" class="dashboard-section" style="padding: 0;">
+                <h2 style="margin-bottom: 32px;">Adventure Readiness &amp; Gear Status</h2>
+                <div class="grid-2" style="gap: 32px; margin-bottom: 40px;">
+                    <div class="card" style="padding: 32px;">
+                        <h3 style="margin-bottom: 24px; font-size: 20px;">Campsite &amp; Excursion Readiness</h3>
+                        <div style="display: flex; flex-direction: column; gap: 24px;">
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                                    <span style="font-weight: 500;">Alpine Ridge Tent Pitch &amp; Firewood</span>
+                                    <span style="font-weight: 600; color: var(--secondary-accent);" id="accuracyGS">72%</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: var(--secondary-bg); border-radius: 4px; overflow: hidden;">
+                                    <div style="width: 72%; height: 100%; background: var(--secondary-accent); border-radius: 4px;" id="progressBarGS"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                                    <span style="font-weight: 500;">Whitewater Kayak &amp; Zipline Waivers</span>
+                                    <span style="font-weight: 600; color: var(--primary-accent);" id="accuracyQuant">85%</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: var(--secondary-bg); border-radius: 4px; overflow: hidden;">
+                                    <div style="width: 85%; height: 100%; background: var(--primary-accent); border-radius: 4px;" id="progressBarQuant"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                                    <span style="font-weight: 500;">Starlight Glamping &amp; Night Trek Gear</span>
+                                    <span style="font-weight: 600; color: #E53E3E;" id="accuracyChem">54% (Pending Check)</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: var(--secondary-bg); border-radius: 4px; overflow: hidden;">
+                                    <div style="width: 54%; height: 100%; background: #E53E3E; border-radius: 4px;" id="progressBarChem"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px;">
+                                    <span style="font-weight: 500;">Leave-No-Trace &amp; Trail Orientation</span>
+                                    <span style="font-weight: 600; color: var(--primary-accent);" id="accuracyLogic">90%</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: var(--secondary-bg); border-radius: 4px; overflow: hidden;">
+                                    <div style="width: 90%; height: 100%; background: var(--primary-accent); border-radius: 4px;" id="progressBarLogic"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card" style="padding: 32px; background: rgba(217, 119, 6, 0.06); border: 1px solid rgba(217, 119, 6, 0.25); display: flex; flex-direction: column; justify-content: center;" id="weakAreaAlertCard">
+                        <div style="width: 48px; height: 48px; background: rgba(217, 119, 6, 0.12); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #D97706; margin-bottom: 20px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <h3 style="color: #92400E; font-size: 20px; margin-bottom: 12px;">Night Trek Gear Check Required</h3>
+                        <p style="color: #B45309; font-size: 15px; line-height: 1.6; margin-bottom: 24px;" id="weakAreaAlertText">Your Starlight Glamping &amp; Night Trek booking is at 54% readiness because red-light headlamp and thermal layer selections are incomplete. Complete the 4-step booking check-in now.</p>
+                        <a href="#bookings" class="btn btn-primary" style="align-self: flex-start; height: 44px; padding: 0 24px; font-size: 14px; border-radius: 8px; text-decoration: none; display: flex; align-items: center; justify-content: center; background: var(--secondary-accent);">Complete Booking Check-In</a>
+                    </div>
+                </div>
+                
+                <div class="grid-3" style="gap: 24px;">
+                    <div class="card" style="padding: 24px; display: flex; flex-direction: column;">
+                        <h4 style="font-size: 16px; margin-bottom: 8px;">Trail Readiness Status</h4>
+                        <div style="font-size: 28px; font-weight: 700; color: var(--primary-accent);" id="percentileRankText">Summit Cleared</div>
+                        <p style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">Approved for 4,200 ft ridge elevation trails.</p>
+                    </div>
+                    <div class="card" style="padding: 24px; display: flex; flex-direction: column;">
+                        <h4 style="font-size: 16px; margin-bottom: 8px;">Basecamp Check-In Time</h4>
+                        <div style="font-size: 28px; font-weight: 700; color: var(--primary-accent);">Under 3 Mins</div>
+                        <p style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">Express QR pass enabled for Pinewood Gate.</p>
+                    </div>
+                    <div class="card" style="padding: 24px; display: flex; flex-direction: column;">
+                        <h4 style="font-size: 16px; margin-bottom: 8px;">Itinerary Completion</h4>
+                        <div style="font-size: 28px; font-weight: 700; color: var(--primary-accent);">94% Ready</div>
+                        <p style="color: var(--text-secondary); font-size: 13px; margin-top: 8px;">All tents, kayaks, and campfire meals synced.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. Guest Settings -->
+            <section id="settings" class="dashboard-section" style="padding: 0;">
+                <h2 style="margin-bottom: 32px;">Guest Settings</h2>
+                <div class="grid-2" style="gap: 32px;">
+                    <div class="card" style="padding: 32px;">
+                        <h3 style="margin-bottom: 24px; font-size: 18px;">Guest Profile Information</h3>
+                        <form>
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" value="John">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input type="text" class="form-control" value="Doe">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" class="form-control" value="john.doe@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Emergency Contact Phone</label>
+                                <input type="tel" class="form-control" value="+1 (555) 123-4567">
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-3">Update Guest Profile</button>
+                        </form>
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 32px;">
+                        <div class="card" style="padding: 32px;">
+                            <h3 style="margin-bottom: 24px; font-size: 18px;">Camp &amp; Weather Alerts</h3>
+                            <form>
+                                <div class="form-group">
+                                    <label>Itinerary &amp; Trail Notifications</label>
+                                    <select class="form-control">
+                                        <option>Daily Weather &amp; Trail Briefings</option>
+                                        <option selected>Check-In &amp; Activity Reminders</option>
+                                        <option>Emergency Weather Alerts Only</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Language</label>
+                                    <select class="form-control">
+                                        <option selected>English</option>
+                                        <option>Spanish</option>
+                                        <option>Arabic</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-secondary mt-3">Save Preferences</button>
+                            </form>
+                        </div>
+                        <div class="card" style="padding: 32px; border-color: rgba(239, 68, 68, 0.3);">
+                            <h3 style="margin-bottom: 16px; font-size: 18px; color: #EF4444;">Cancel Camp Reservation</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 24px; font-size: 14px;">If you cancel your active camp pass, your reserved tent pitch, kayak slots, and itinerary logs will be released.</p>
+                            <button class="btn" style="background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.2);">Cancel Reservation</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    </div>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camp Activities &amp; Expeditions | WildCamp</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <img src="assets/images/logo.svg" alt="WildCamp Logo" class="nav-brand-img">
+                <span>WildCamp<span class="brand-accent"></span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="home-2.html">Home 2</a></li>
+                <li><a href="about.html">Our Camp</a></li>
+                <li><a href="courses.html" class="active">Activities</a></li>
+                <li><a href="study-packages.html">Packages</a></li>
+                <li><a href="pricing.html">Passes</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="themeToggle" class="action-icon" aria-label="Toggle Dark Mode"
+                    title="Toggle Dark Mode"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+                <button id="rtlToggle" class="action-icon" aria-label="Toggle RTL" title="Toggle RTL"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><polyline points="16 3 21 8 16 13"/><line x1="21" y1="8" x2="9" y2="8"/><polyline points="8 21 3 16 8 11"/><line x1="3" y1="16" x2="15" y2="16"/></svg></button>
+                <a href="dashboard.html" class="action-icon" aria-label="Dashboard" title="Dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="7" height="9" x="3" y="3" rx="1" />
+                        <rect width="7" height="5" x="14" y="3" rx="1" />
+                        <rect width="7" height="9" x="14" y="12" rx="1" />
+                        <rect width="7" height="5" x="3" y="16" rx="1" />
+                    </svg>
+                </a>
+                <a href="login.html" class="btn btn-primary" style="height: 44px; padding: 0 20px;">Login</a>
+                <button class="mobile-menu-toggle action-icon" aria-label="Toggle Menu">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Separate Image -->
+    <section class="page-hero">
+        <div class="container fade-up">
+            <div class="page-hero-content">
+                <div class="badge-premium">
+                    <div class="badge-pulse"></div>
+                    Guided Wilderness Expeditions
+                </div>
+                <h1>Outdoor Camp Activities <span class="text-highlight">&amp; Trail Adventures</span></h1>
+                <p class="subheading">Experience summit trekking, whitewater kayaking, canyon ziplining, and twilight stargazing sessions led by certified wilderness rangers.</p>
+                <div class="page-hero-highlights">
+                    <span class="page-hero-pill"><span>✓</span> 6 Guided Trail &amp; River Sports</span>
+                    <span class="page-hero-pill"><span>✓</span> All Safety Gear Included</span>
+                    <span class="page-hero-pill"><span>✓</span> WFR-Certified Guides</span>
+                </div>
+            </div>
+            
+            <div class="page-hero-visual">
+                <div class="hero-image-card">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80" alt="WildCamp Activities" class="img-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activities Grid -->
+    <section style="padding: 60px 0 100px;">
+        <div class="container">
+            <div class="grid-3">
+                <div class="card fade-up">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
+                        alt="Alpine Summit Trekking"
+                        style="margin-bottom: 24px; height: 240px; width: 100%; object-fit: cover; border-radius: 12px;">
+                    <h3 class="card-title">Alpine Summit &amp; Ridge Trekking</h3>
+                    <p class="card-text">Guided sunrise mountain hikes, panoramic ridge trails, and backcountry orienteering across scenic forest peaks.</p>
+                    <div class="card-actions">
+                        <a href="study-packages.html" class="btn btn-secondary">Explore Packages</a>
+                    </div>
+                </div>
+                <div class="card fade-up" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80"
+                        alt="Whitewater Kayaking &amp; Rafting"
+                        style="margin-bottom: 24px; height: 240px; width: 100%; object-fit: cover; border-radius: 12px;">
+                    <h3 class="card-title">Whitewater Kayaking &amp; Rafting</h3>
+                    <p class="card-text">Navigate crystal-clear mountain rapids and tranquil alpine lakes with certified river guides and full safety gear.</p>
+                    <div class="card-actions">
+                        <a href="study-packages.html" class="btn btn-secondary">Explore Packages</a>
+                    </div>
+                </div>
+                <div class="card fade-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80"
+                        alt="Canyon Canopy &amp; Zipline"
+                        style="margin-bottom: 24px; height: 240px; width: 100%; object-fit: cover; border-radius: 12px;">
+                    <h3 class="card-title">Canyon Canopy &amp; Cliff Zipline</h3>
+                    <p class="card-text">Soar across suspended timber bridges and high-altitude forest ziplines overlooking Whispering Woods Gorge.</p>
+                    <div class="card-actions">
+                        <a href="study-packages.html" class="btn btn-secondary">Explore Packages</a>
+                    </div>
+                </div>
+                <div class="card fade-up">
+                    <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80"
+                        alt="Wilderness Bushcraft &amp; Survival"
+                        style="margin-bottom: 24px; height: 240px; width: 100%; object-fit: cover; border-radius: 12px;">
+                    <h3 class="card-title">Wilderness Bushcraft &amp; Survival</h3>
+                    <p class="card-text">Hands-on fire building, shelter construction, rope knots, and outdoor foraging workshops for all skill levels.</p>
+                    <div class="card-actions">
+                        <a href="study-packages.html" class="btn btn-secondary">Explore Packages</a>
+                    </div>
+                </div>
+                <div class="card fade-up" style="transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80"
+                        alt="Starlight Astronomy &amp; Night Walks"
+                        style="margin-bottom: 24px; height: 240px; width: 100%; object-fit: cover; border-radius: 12px;">
+                    <h3 class="card-title">Starlight Astronomy &amp; Night Walks</h3>
+                    <p class="card-text">Guided nocturnal wildlife walks followed by high-powered telescope stargazing around a warm cedar campfire.</p>
+                    <div class="card-actions">
+                        <a href="study-packages.html" class="btn btn-secondary">Explore Packages</a>
+                    </div>
+                </div>
+                <div class="card fade-up" style="transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80"
+                        alt="Mountain Biking &amp; Singletrack"
+                        style="margin-bottom: 24px; height: 240px; width: 100%; object-fit: cover; border-radius: 12px;">
+                    <h3 class="card-title">Mountain Biking &amp; Singletrack</h3>
+                    <p class="card-text">High-adrenaline forest trail rides, switchback descents, and scenic valley loops with full-suspension trail bikes.</p>
+                    <div class="card-actions">
+                        <a href="study-packages.html" class="btn btn-secondary">Explore Packages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1. Activity Process (Ultra Premium) -->
+    <style>
+        .premium-process-wrap {
+            background: var(--secondary-bg);
+            position: relative;
+            overflow: hidden;
+            padding: 120px 0;
+            color: var(--text-primary);
+        }
+
+        /* Glowing Orbs for background */
+        .process-glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            z-index: 0;
+            animation: float-glow 10s infinite alternate;
+        }
+
+        .glow-1 {
+            top: -10%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(45, 106, 79, 0.15);
+        }
+
+        .glow-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(27, 67, 50, 0.12);
+        }
+
+        @keyframes float-glow {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(50px, 50px) scale(1.1);
+            }
+        }
+
+        .process-cards-container {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 80px;
+        }
+
+        .premium-step-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 48px 32px;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 320px;
+        }
+
+        .premium-step-card:hover {
+            border-color: var(--primary-accent);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Massive Background Number */
+        .step-bg-num {
+            position: absolute;
+            top: 16px;
+            right: 24px;
+            font-size: 60px;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--primary-accent);
+            opacity: 0.3;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+        }
+
+        .premium-step-card:hover .step-bg-num {
+            opacity: 0.6;
+            transform: scale(1.05) translate(-4px, 4px);
+        }
+
+        .step-progress-bar {
+            height: 4px;
+            width: 0%;
+            background: var(--primary-accent);
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .premium-step-card:hover .step-progress-bar {
+            width: 100%;
+        }
+
+        @media (max-width: 992px) {
+            .process-cards-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .blueprint-header {
+                justify-content: center !important;
+                text-align: center !important;
+                flex-direction: column !important;
+                align-items: center !important;
+            }
+
+            .blueprint-header>div,
+            .blueprint-header p {
+                max-width: 100% !important;
+                text-align: center !important;
+            }
+        }
+
+        .masterclass-title {
+            font-size: 48px;
+        }
+
+        @media (max-width: 640px) {
+            .process-cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .masterclass-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+
+    <section class="premium-process-wrap">
+        <div class="process-glow glow-1"></div>
+        <div class="process-glow glow-2"></div>
+
+        <div class="container fade-up" style="position: relative; z-index: 2;">
+            <div class="blueprint-header"
+                style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px;">
+                <div style="max-width: 600px;">
+                    <div
+                        style="color: var(--primary-accent); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 14px; margin-bottom: 16px;">
+                        The Adventure Blueprint</div>
+                    <h2 class="masterclass-title" style="line-height: 1.1; margin: 0; color: var(--text-primary);">A
+                        masterclass in <br><span style="color: var(--text-secondary);">outdoor exploration.</span></h2>
+                </div>
+                <p
+                    style="color: var(--text-secondary); max-width: 400px; margin: 0; font-size: 16px; line-height: 1.6;">
+                    We have engineered a personalized camp itinerary blueprint that pairs your ideal tent zone with daily ranger-led excursions.
+                </p>
+            </div>
+
+            <div class="process-cards-container">
+                <!-- Step 1 -->
+                <div class="premium-step-card fade-up">
+                    <div class="step-bg-num">01</div>
+                    <div>
+                        <div
+                            style="width: 12px; height: 12px; background: var(--primary-accent); border-radius: 50%; margin-bottom: 24px; box-shadow: 0 0 15px var(--primary-accent);">
+                        </div>
+                        <h3 style="font-size: 24px; margin-bottom: 16px; color: var(--text-primary); min-height: 64px;">
+                            Select Your Trail Pace</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; margin: 0; line-height: 1.6;">Choose from relaxed family nature walks, scenic lake paddles, or high-altitude summit expeditions.</p>
+                    </div>
+                    <div
+                        style="margin-top: 32px; background: var(--border-color); height: 4px; border-radius: 4px; overflow: hidden;">
+                        <div class="step-progress-bar"></div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="premium-step-card fade-up" style="transition-delay: 0.1s;">
+                    <div class="step-bg-num">02</div>
+                    <div>
+                        <div
+                            style="width: 12px; height: 12px; background: var(--text-secondary); border-radius: 50%; margin-bottom: 24px;">
+                        </div>
+                        <h3 style="font-size: 24px; margin-bottom: 16px; color: var(--text-primary); min-height: 64px;">
+                            Custom Daily Itinerary</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; margin: 0; line-height: 1.6;">We auto-generate a balanced daily camp schedule around sunrise treks, afternoon water sports, and evening bonfires.</p>
+                    </div>
+                    <div
+                        style="margin-top: 32px; background: var(--border-color); height: 4px; border-radius: 4px; overflow: hidden;">
+                        <div class="step-progress-bar"></div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="premium-step-card fade-up" style="transition-delay: 0.2s;">
+                    <div class="step-bg-num">03</div>
+                    <div>
+                        <div
+                            style="width: 12px; height: 12px; background: var(--text-secondary); border-radius: 50%; margin-bottom: 24px;">
+                        </div>
+                        <h3 style="font-size: 24px; margin-bottom: 16px; color: var(--text-primary); min-height: 64px;">
+                            Gear &amp; Safety Briefing</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; margin: 0; line-height: 1.6;">Pick up pre-fitted helmets, harnesses, kayaks, and trail radios at basecamp with your assigned camp ranger.</p>
+                    </div>
+                    <div
+                        style="margin-top: 32px; background: var(--border-color); height: 4px; border-radius: 4px; overflow: hidden;">
+                        <div class="step-progress-bar"></div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="premium-step-card fade-up" style="transition-delay: 0.3s;">
+                    <div class="step-bg-num">04</div>
+                    <div>
+                        <div
+                            style="width: 12px; height: 12px; background: var(--text-secondary); border-radius: 50%; margin-bottom: 24px;">
+                        </div>
+                        <h3 style="font-size: 24px; margin-bottom: 16px; color: var(--text-primary); min-height: 64px;">
+                            Guided Trail Expedition</h3>
+                        <p style="color: var(--text-secondary); font-size: 15px; margin: 0; line-height: 1.6;">Head into the wilderness with certified trail leaders, live weather tracking, and chef-packed trail provisions.</p>
+                    </div>
+                    <div
+                        style="margin-top: 32px; background: var(--border-color); height: 4px; border-radius: 4px; overflow: hidden;">
+                        <div class="step-progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Premium Guarantee Banner -->
+    <section class="premium-section"
+        style="padding: 80px 0; background: var(--primary-bg); color: var(--text-primary); text-align: center;">
+        <div class="container fade-up">
+            <h2 style="font-size: 36px; margin-bottom: 24px;">The WildCamp Adventure Guarantee</h2>
+            <p style="color: var(--text-secondary); font-size: 18px; max-width: 700px; margin: 0 auto 40px;">We stand behind every outdoor excursion. If mountain weather or trail conditions pause your scheduled activity, we will reschedule your slot or provide a full pass refund and host your next activity free.</p>
+            <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="color: var(--highlight-accent); font-size: 24px;">✓</div>
+                    <span style="font-weight: 600;">100% Weather-Flex Guarantee</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="color: var(--highlight-accent); font-size: 24px;">✓</div>
+                    <span style="font-weight: 600;">All Trail Gear Included</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div style="color: var(--highlight-accent); font-size: 24px;">✓</div>
+                    <span style="font-weight: 600;">Certified Ranger Guides</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Pre-Footer Activities Expedition Desk & Timeline CTA (Design 4) -->
+    <section class="cta-section-activities">
+        <div class="container fade-up">
+            <div class="cta-activities-card">
+                <div style="text-align: center; max-width: 780px; margin: 0 auto 32px;">
+                    <div class="badge-premium" style="margin-bottom: 16px;">
+                        <div class="badge-pulse"></div>
+                        Custom Expedition Builder &bull; WFR-Certified Ranger Guides
+                    </div>
+                    <h2 style="font-size: clamp(28px, 3.5vw, 40px); line-height: 1.25; margin-bottom: 16px;">
+                        Ready to Plan Your <span class="text-highlight">Outdoor Itinerary</span>?
+                    </h2>
+                    <p style="color: var(--text-secondary); font-size: 16.5px; line-height: 1.6; margin: 0;">
+                        Schedule a free 15-minute trip planning call with a senior basecamp ranger. We tailor your daily trail pace, river kayak runs, canopy zipline slots, and campfire astronomy evenings around your group's experience level.
+                    </p>
+                </div>
+
+                <!-- 3 Interactive Daily Schedule Milestone Cards -->
+                <div class="cta-activities-slots">
+                    <div class="cta-activities-slot">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--highlight-accent); letter-spacing: 0.8px;">06:30 AM &bull; Morning</span>
+                            <span style="background: rgba(217, 119, 6, 0.12); color: var(--primary-accent); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">Sunrise Trek</span>
+                        </div>
+                        <h4 style="font-size: 16px; margin-bottom: 6px; color: var(--text-primary);">Alpine Ridge &amp; Peak Trail</h4>
+                        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Panoramic summit viewpoint, thermal trail coffee, and wildlife photography.</p>
+                    </div>
+
+                    <div class="cta-activities-slot">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--secondary-accent); letter-spacing: 0.8px;">01:30 PM &bull; Afternoon</span>
+                            <span style="background: rgba(45, 106, 79, 0.12); color: var(--secondary-accent); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">River &amp; Canyon</span>
+                        </div>
+                        <h4 style="font-size: 16px; margin-bottom: 6px; color: var(--text-primary);">Whitewater Kayak &amp; Zipline</h4>
+                        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Class III rapids and cliffside canopy zipline run with full drysuit and harness.</p>
+                    </div>
+
+                    <div class="cta-activities-slot">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--primary-accent); letter-spacing: 0.8px;">08:30 PM &bull; Evening</span>
+                            <span style="background: rgba(27, 67, 50, 0.12); color: var(--primary-accent); padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;">Dark Sky</span>
+                        </div>
+                        <h4 style="font-size: 16px; margin-bottom: 6px; color: var(--text-primary);">Campfire &amp; Telescope Tour</h4>
+                        <p style="font-size: 13px; color: var(--text-secondary); margin: 0;">Wood-fired supper, campfire storytelling, and deep-sky constellation viewing.</p>
+                    </div>
+                </div>
+
+                <!-- Bottom Dispatch & Buttons Bar -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; padding-top: 24px; border-top: 1px solid var(--border-color);">
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap; font-size: 13.5px; color: var(--text-secondary);">
+                        <span><strong style="color: var(--primary-accent);">✓</strong> All Safety Gear Included</span>
+                        <span><strong style="color: var(--primary-accent);">✓</strong> Beginner to Pro Levels</span>
+                        <span><strong style="color: var(--primary-accent);">✓</strong> Free Weather Reschedule</span>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <a href="contact.html" class="btn btn-primary" style="height: 48px; padding: 0 28px; font-size: 14.5px;">Talk to a Ranger</a>
+                        <a href="study-packages.html" class="btn btn-secondary" style="height: 48px; padding: 0 28px; font-size: 14.5px;">Compare Packages</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top grid-4">
+                <div class="footer-widget">
+                    <a href="index.html" class="nav-brand" style="margin-bottom: 24px; display: inline-flex;">
+                        <img src="assets/images/logo.svg" alt="WildCamp Logo" class="nav-brand-img">
+                        <span>WildCamp<span class="brand-accent"></span></span>
+                    </a>
+                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Connecting outdoor lovers with scenic pinewood campsites, luxury tents, and guided mountain adventures.</p>
+                    <div class="social-icons-contact" style="display: flex; gap: 12px;">
+                        <a href="#" aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-widget">
+                    <h4>Camp Explorations</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Our Camp</a></li>
+                        <li><a href="courses.html">Camp Activities</a></li>
+                        <li><a href="study-packages.html">Stay Packages</a></li>
+                        <li><a href="pricing.html">Rates &amp; Passes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h4>Guest Portal</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Basecamp</a></li>
+                        <li><a href="login.html">Guest Login</a></li>
+                        <li><a href="register.html">Create Account</a></li>
+                        <li><a href="dashboard.html">Guest Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-links">
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px; color: var(--primary-accent);"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>1-800-555-CAMP</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px; color: var(--primary-accent);"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>bookings@wildcamp.com</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px; color: var(--primary-accent);"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>740 Pine Ridge Trail, Whispering Woods</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom" style="justify-content: center; text-align: center;">
+                <p>&copy; 2026 WildCamp. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

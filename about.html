@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Our Camp | WildCamp</title>
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+    <style>
+        .mission-img {
+            border-radius: 24px;
+            width: 100% !important;
+            height: 360px !important;
+            object-fit: cover !important;
+        }
+
+        /* 1024px Range */
+        @media (max-width: 1200px) and (min-width: 993px) {
+            .mission-img {
+                height: 260px !important;
+            }
+        }
+
+        /* 768px Tablet Range (Increased Height & Full Width) */
+        @media (max-width: 992px) and (min-width: 600px) {
+            .mission-img {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: 420px !important;
+                margin-bottom: 24px;
+            }
+        }
+
+        /* Small Mobile */
+        @media (max-width: 599px) {
+            .mission-img {
+                width: 100% !important;
+                height: 280px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-brand">
+                <img src="assets/images/logo.svg" alt="WildCamp Logo" class="nav-brand-img">
+                <span>WildCamp<span class="brand-accent"></span></span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="home-2.html">Home 2</a></li>
+                <li><a href="about.html" class="active">Our Camp</a></li>
+                <li><a href="courses.html">Activities</a></li>
+                <li><a href="study-packages.html">Packages</a></li>
+                <li><a href="pricing.html">Passes</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button id="themeToggle" class="action-icon" aria-label="Toggle Dark Mode" title="Toggle Dark Mode"><svg
+                        width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg></button>
+                <button id="rtlToggle" class="action-icon" aria-label="Toggle RTL" title="Toggle RTL"><svg width="20"
+                        height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;">
+                        <polyline points="16 3 21 8 16 13" />
+                        <line x1="21" y1="8" x2="9" y2="8" />
+                        <polyline points="8 21 3 16 8 11" />
+                        <line x1="3" y1="16" x2="15" y2="16" />
+                    </svg></button>
+                <a href="dashboard.html" class="action-icon" aria-label="Dashboard" title="Dashboard">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="7" height="9" x="3" y="3" rx="1" />
+                        <rect width="7" height="5" x="14" y="3" rx="1" />
+                        <rect width="7" height="9" x="14" y="12" rx="1" />
+                        <rect width="7" height="5" x="3" y="16" rx="1" />
+                    </svg>
+                </a>
+                <a href="login.html" class="btn btn-primary" style="height: 44px; padding: 0 20px;">Login</a>
+                <button class="mobile-menu-toggle action-icon" aria-label="Toggle Menu">☰</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner with Separate Image -->
+    <section class="page-hero">
+        <div class="container fade-up">
+            <div class="page-hero-content">
+                <div class="badge-premium">
+                    <div class="badge-pulse"></div>
+                    Preserving The Wilderness
+                </div>
+                <h1>Our Heritage &amp; <span class="text-highlight">Wilderness Mission</span></h1>
+                <p class="subheading">Founded by alpine mountaineers and forest conservationists to connect adventurers with pristine nature, eco-friendly campsites, and guided outdoor expeditions.</p>
+                <div class="page-hero-highlights">
+                    <span class="page-hero-pill"><span>✓</span> 1,200+ Protected Forest Acres</span>
+                    <span class="page-hero-pill"><span>✓</span> Leave-No-Trace Certified</span>
+                    <span class="page-hero-pill"><span>✓</span> 24/7 Ranger Patrol</span>
+                </div>
+            </div>
+
+            <div class="page-hero-visual">
+                <div class="hero-image-card">
+                    <img src="https://ccrc.tc.columbia.edu/wp-content/uploads/2025/04/teaching-community-college-students-versatile-learners.jpg"
+                        alt="About WildCamp" class="img-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Stats (New Section 2) -->
+    <section class="premium-section" style="padding: 80px 0; background: var(--secondary-bg); color: var(--text-primary); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+        <div class="container fade-up">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 40px; text-align: center;">
+                <div>
+                    <div
+                        style="font-size: 56px; font-weight: 700; color: var(--primary-accent); line-height: 1; margin-bottom: 16px;">
+                        10k+</div>
+                    <div style="font-size: 18px; font-weight: 600; letter-spacing: 1px; color: var(--text-primary);">Campers Hosted
+                    </div>
+                </div>
+                <div>
+                    <div
+                        style="font-size: 56px; font-weight: 700; color: var(--secondary-accent); line-height: 1; margin-bottom: 16px;">
+                        98%</div>
+                    <div style="font-size: 18px; font-weight: 600; letter-spacing: 1px; color: var(--text-primary);">5-Star Trail
+                        Ratings</div>
+                </div>
+                <div>
+                    <div
+                        style="font-size: 56px; font-weight: 700; color: var(--highlight-accent); line-height: 1; margin-bottom: 16px;">
+                        100%</div>
+                    <div style="font-size: 18px; font-weight: 600; letter-spacing: 1px; color: var(--text-primary);">Certified Camp
+                        Rangers</div>
+                </div>
+                <div>
+                    <div
+                        style="font-size: 56px; font-weight: 700; color: var(--primary-accent); line-height: 1; margin-bottom: 16px;">
+                        24/7</div>
+                    <div style="font-size: 18px; font-weight: 600; letter-spacing: 1px; color: var(--text-primary);">Basecamp Patrol
+                        Availability</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Values -->
+    <section class="bg-secondary">
+        <div class="container">
+            <div class="grid-2 tab-stack image-first" style="align-items: center;">
+                <div class="fade-up">
+                    <img src="https://tmvidyalaya.edu.in/wp-content/uploads/2025/03/Tilak-Maharashtra-Vidyalaya-Best-CBSE-School-Pune-in-Gultekdi-Mukundnagar-School-Mission-Statement.jpg"
+                        alt="Our Mission" class="mission-img"
+                        style="border-radius: 24px;">
+                </div>
+                <div class="fade-up" style="transition-delay: 0.2s;">
+                    <h2>Mission &amp; Values</h2>
+                    <p class="subheading">Blending rugged backcountry adventure with comfortable, sustainable campsite hospitality.
+                    </p>
+                    <ul style="list-style: none;">
+                        <li
+                            style="margin-bottom: 16px; padding: 16px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color);">
+                            <h4 style="margin-bottom: 8px;">Leave-No-Trace Stewardship</h4>
+                            <p style="color: var(--text-secondary); font-size: 14px;">Maintaining solar-powered glamping zones, zero-waste fire rings, and protected wildlife corridors.</p>
+                        </li>
+                        <li
+                            style="margin-bottom: 16px; padding: 16px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color);">
+                            <h4 style="margin-bottom: 8px;">Trail-First Safety Protocol</h4>
+                            <p style="color: var(--text-secondary); font-size: 14px;">Mapping all guided treks, river routes, and canopy courses to certified national wilderness standards.</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certified Rangers -->
+    <section>
+        <div class="container text-center fade-up">
+            <div class="section-header">
+                <h2>Our Lead Wilderness Rangers</h2>
+                <p class="subheading">The outdoor specialists guiding your trails and camp experiences.</p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSa2x-ENs4L1156Bbu4AqbXyqEONC7-9kRhCWViOGsCLC6Z4_-J5vunnO8b&s=10"
+                        alt="Sarah Jenkins" style="margin-bottom: 24px; height: 300px; object-fit: cover;">
+                    <h3 style="font-size: 20px;">Sarah Jenkins, WFR</h3>
+                    <p style="color: var(--primary-accent); margin-bottom: 16px;">Head of Alpine Trail Expeditions</p>
+                    <p class="card-text">15+ years of mountaineering experience, specializing in ridge navigation and backcountry survival skills.</p>
+                </div>
+                <div class="card">
+                    <img src="https://www.ey.com/adobe/dynamicmedia/deliver/dm-aid--a990ed18-0570-4174-b17d-095d8e08e738/ey-david-chen-v2.jpg?preferwebp=true&quality=85&width=1100"
+                        alt="David Chen" style="margin-bottom: 24px; height: 300px; object-fit: cover;">
+                    <h3 style="font-size: 20px;">David Chen, ACA</h3>
+                    <p style="color: var(--primary-accent); margin-bottom: 16px;">Lead Whitewater &amp; Kayak Guide</p>
+                    <p class="card-text">Expert in canyon river rapids, kayak touring, and lakeside water safety protocols across mountain waterways.</p>
+                </div>
+                <div class="card">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRliOreJYs0AdxyoPlajj6fN-IuLrJ33BC_vBLtj5WmLs7aUPmntQKETlJY&s=10"
+                        alt="Elena Rodriguez" style="margin-bottom: 24px; height: 300px; object-fit: cover;">
+                    <h3 style="font-size: 20px;">Elena Rodriguez, Ph.D.</h3>
+                    <p style="color: var(--primary-accent); margin-bottom: 16px;">Director of Forest Ecology &amp; Sky</p>
+                    <p class="card-text">Leading twilight nature walks, wildlife tracking workshops, and telescope stargazing nights at basecamp.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Standards (New Section 1) -->
+    <section class="premium-section" style="padding: 100px 0; background: var(--secondary-bg);">
+        <div class="container fade-up">
+            <div class="section-header text-center">
+                <div class="badge-premium" style="margin-bottom: 16px; margin-left: auto; margin-right: auto;">Our
+                    Standards</div>
+                <h2>The WildCamp Difference</h2>
+                <p class="subheading" style="max-width: 600px; margin: 0 auto;">We don't just rent tent pitches; we deliver an all-inclusive wilderness camp experience designed for adventure and peace of mind.</p>
+            </div>
+
+            <div class="grid-4" style="gap: 32px; margin-top: 64px;">
+                <div class="card"
+                    style="text-align: center; padding: 40px 24px; border-top: 4px solid var(--primary-accent); display: flex; flex-direction: column; align-items: center;">
+                    <div
+                        style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; background: rgba(27,67,50,0.1); border-radius: 50%; margin-bottom: 24px; color: var(--primary-accent);">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 20px; margin-bottom: 16px;">Eco-Aligned</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">Campsite clearings and canvas tents thoughtfully integrated into natural pine forest habitats.</p>
+                </div>
+                <div class="card"
+                    style="text-align: center; padding: 40px 24px; border-top: 4px solid var(--support-accent); display: flex; flex-direction: column; align-items: center;">
+                    <div
+                        style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; background: rgba(82,183,136,0.15); border-radius: 50%; margin-bottom: 24px; color: var(--primary-accent);">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 20px; margin-bottom: 16px;">Ranger Support</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">Our experienced camp rangers respond to guest gear requests and trail questions within minutes.</p>
+                </div>
+                <div class="card"
+                    style="text-align: center; padding: 40px 24px; border-top: 4px solid var(--border-color); display: flex; flex-direction: column; align-items: center;">
+                    <div
+                        style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; background: rgba(27,67,50,0.1); border-radius: 50%; margin-bottom: 24px; color: var(--primary-accent);">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                            <line x1="8" y1="21" x2="16" y2="21" />
+                            <line x1="12" y1="17" x2="12" y2="21" />
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 20px; margin-bottom: 16px;">Guest Dashboard</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">Manage tent bookings, view daily activity itineraries, and track camp passes from one portal.</p>
+                </div>
+                <div class="card"
+                    style="text-align: center; padding: 40px 24px; border-top: 4px solid var(--secondary-accent); display: flex; flex-direction: column; align-items: center;">
+                    <div
+                        style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; background: rgba(27,67,50,0.1); border-radius: 50%; margin-bottom: 24px; color: var(--primary-accent);">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                            <path d="M4 22h16" />
+                            <path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34" />
+                            <path d="M12 2a6 6 0 0 1 6 6v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6V8a6 6 0 0 1 6-6z" />
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 20px; margin-bottom: 16px;">Guided Trails</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">Excursions tailored to your fitness level and pace to maximize scenic discovery and safety.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pre-Footer Conservation & Heritage Pledge CTA (Design 3) -->
+    <section class="cta-section-about">
+        <div class="container fade-up">
+            <div class="cta-about-card">
+                <div class="badge-premium" style="margin-bottom: 20px;">
+                    <div class="badge-pulse"></div>
+                    Our Wilderness Stewardship Pledge
+                </div>
+                <h2 style="font-size: clamp(30px, 3.6vw, 42px); line-height: 1.25; margin-bottom: 16px; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Preserve the Mountain as You <span class="text-highlight">Explore It</span>
+                </h2>
+                <p style="color: var(--text-secondary); font-size: 17px; line-height: 1.65; max-width: 700px; margin: 0 auto;">
+                    Every camper at WildCamp contributes directly to local alpine reforestation, trail maintenance, and wildlife corridor protection. Stay in luxury tents built entirely from eco-certified materials.
+                </p>
+
+                <!-- 3 Conservation Metric Medallions -->
+                <div class="cta-about-medallions">
+                    <div class="cta-about-medallion">
+                        <div class="cta-about-medallion-num">1,200+</div>
+                        <div class="cta-about-medallion-title">Protected Acres</div>
+                        <p class="cta-about-medallion-desc">Continuous pinewood forest canopy and natural river basin safeguards.</p>
+                    </div>
+                    <div class="cta-about-medallion">
+                        <div class="cta-about-medallion-num">100%</div>
+                        <div class="cta-about-medallion-title">Solar &amp; Off-Grid</div>
+                        <p class="cta-about-medallion-desc">Quiet battery storage &amp; eco-clean energy powering basecamp facilities.</p>
+                    </div>
+                    <div class="cta-about-medallion">
+                        <div class="cta-about-medallion-num">0 Trace</div>
+                        <div class="cta-about-medallion-title">Certified Stewardship</div>
+                        <p class="cta-about-medallion-desc">Strict leave-no-trace outdoor ethics upheld across all guided expeditions.</p>
+                    </div>
+                </div>
+
+                <!-- Action Button Group -->
+                <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+                    <a href="study-packages.html" class="btn btn-primary" style="height: 52px; padding: 0 36px; font-size: 15.5px;">Join a Conservation Campout</a>
+                    <a href="contact.html" class="btn btn-secondary" style="height: 52px; padding: 0 36px; font-size: 15.5px;">Visitor Center Inquiries</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top grid-4">
+                <div class="footer-widget">
+                    <a href="index.html" class="nav-brand" style="margin-bottom: 24px; display: inline-flex;">
+                        <img src="assets/images/logo.svg" alt="WildCamp Logo" class="nav-brand-img">
+                        <span>WildCamp<span class="brand-accent"></span></span>
+                    </a>
+                    <p style="color: var(--text-secondary); margin-bottom: 24px;">Connecting outdoor lovers with scenic pinewood campsites, luxury tents, and guided mountain adventures.</p>
+                    <div class="social-icons-contact" style="display: flex; gap: 12px;">
+                        <a href="#" aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path
+                                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                </path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-widget">
+                    <h4>Camp Explorations</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Our Camp</a></li>
+                        <li><a href="courses.html">Camp Activities</a></li>
+                        <li><a href="study-packages.html">Stay Packages</a></li>
+                        <li><a href="pricing.html">Rates &amp; Passes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h4>Guest Portal</h4>
+                    <ul class="footer-links">
+                        <li><a href="contact.html">Contact Basecamp</a></li>
+                        <li><a href="login.html">Guest Login</a></li>
+                        <li><a href="register.html">Create Account</a></li>
+                        <li><a href="dashboard.html">Guest Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-links">
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                                style="vertical-align: middle; margin-right: 8px; color: var(--primary-accent);">
+                                <path
+                                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                            </svg>1-800-555-CAMP</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                                style="vertical-align: middle; margin-right: 8px; color: var(--primary-accent);">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                <polyline points="22,6 12,13 2,6" />
+                            </svg>bookings@wildcamp.com</li>
+                        <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                                style="vertical-align: middle; margin-right: 8px; color: var(--primary-accent);">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                            </svg>740 Pine Ridge Trail, Whispering Woods</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom" style="justify-content: center; text-align: center;">
+                <p>&copy; 2026 WildCamp. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
